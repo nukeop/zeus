@@ -1,6 +1,8 @@
 #[macro_use]
 extern crate neon;
 
+pub mod core;
+
 use neon::prelude::*;
 
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
