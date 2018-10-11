@@ -26,4 +26,8 @@ impl CPU {
             regs: Registers::new()
         }
     }
+
+    pub fn step(&mut self) {
+        
+    }
 }
