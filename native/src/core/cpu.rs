@@ -203,10 +203,10 @@ impl CPU {
 
         if (addr3 < 0x2000) {
             let result = swizzle(
-                self.ram.load_byte(addr1),
-                self.ram.load_byte(addr2)
+                self.ram.load_word(addr1),
+                self.ram.load_word(addr2)
             );
-            self.ram.store_byte(addr3, result);
+            self.ram.store_word(addr3, result);
         }
     }
 
