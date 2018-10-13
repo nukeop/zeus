@@ -44,6 +44,13 @@ impl CPU {
         val
     }
 
+    pub fn load_word_increment_pc(&mut self) -> u16 {
+        let pc = self.regs.pc;
+        let val = self.ram.load_word(pc);
+        self.regs.pc += 2;
+        val
+    }
+
     pub fn get_addr(&mut self) -> u16 {
         let low = self.load_byte_increment_pc();
         let hi = self.load_byte_increment_pc();
@@ -64,31 +71,26 @@ impl CPU {
             0x08 => self.mvya(),
             0x09 => self.mvta(),
             0x0A => self.mvpa(),
-            0x0B => self.generate_arithm(|x, y| {
-                x.wrapping_add(y)
-            }),
-            0x0C => self.generate_arithm(|x, y| {
-                x.wrapping_sub(y)
-            }),
-            0x0D => self.generate_arithm(|x, y| {
-                x.wrapping_mul(y)
-            }),
-            0x0E => self.generate_arithm(|x, y| {
-                x.wrapping_div(y)
-            }),
-            0x0F => self.generate_arithm(|x, y| {
-                x.wrapping_rem(y)
-            }),
+            0x0B => self.generate_binary(|x, y| x.wrapping_add(y)),
+            0x0C => self.generate_binary(|x, y| x.wrapping_sub(y)),
+            0x0D => self.generate_binary(|x, y| x.wrapping_mul(y)),
+            0x0E => self.generate_binary(|x, y| x.wrapping_div(y)),
+            0x0F => self.generate_binary(|x, y| x.wrapping_rem(y)),
             0x10 => self.swiz(),
-            0x11 => self.generate_arithm(|x, y| {
-                x & y
-            }),
-            0x12 => self.generate_arithm(|x, y| {
-                x | y
-            }),
-            0x13 => self.generate_arithm(|x, y| {
-                x ^ y
-            }),
+            0x11 => self.generate_binary(|x, y| x & y),
+            0x12 => self.generate_binary(|x, y| x | y),
+            0x13 => self.generate_binary(|x, y| x ^ y),
+            0x14 => self.generate_unary(|x| !x),
+            0x15 => self.generate_unary(|x| x << 1),
+            0x16 => self.generate_unary(|x| x >> 1),
+            0x17 => self.generate_cmp(|x, y| x == y),
+            0x18 => self.generate_cmp(|x, y| x > y),
+            0x19 => self.generate_cmp(|x, y| x < y),
+            0x20 => self.jump(),
+            0x21 => self.tjmp(),
+            0x22 => self.fjmp(),
+            0x23 => self.bank(),
+            0x24 => self.rand(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -158,31 +160,78 @@ impl CPU {
         }
     }
 
-    pub fn generate_arithm<F>(&mut self, closure: F) where F: Fn(u8, u8) -> u8 {
+    pub fn generate_binary<F>(&mut self, closure: F) where F: Fn(u8, u8) -> u8 {
         let addr1 = self.get_addr();
         let addr2 = self.get_addr();
-        let addr3 = self.get_addr();
+        let dest = self.get_addr();
 
-        if (addr3 < 0x2000) {
+        if (dest < 0x2000) {
             let result = closure(
                 self.ram.load_byte(addr1),
                 self.ram.load_byte(addr2)
             );
-            self.ram.store_byte(addr3, result);
+            self.ram.store_byte(dest, result);
         }
     }
 
     pub fn swiz(&mut self) {
         let addr1 = self.get_addr();
         let addr2 = self.get_addr();
-        let addr3 = self.get_addr();
+        let dest = self.get_addr();
 
-        if (addr3 < 0x2000) {
+        if (dest < 0x2000) {
             let result = swizzle(
                 self.ram.load_word(addr1),
                 self.ram.load_word(addr2)
             );
-            self.ram.store_word(addr3, result);
+            self.ram.store_word(dest, result);
         }
+    }
+
+    pub fn generate_unary<F>(&mut self, closure: F) where F: Fn(u8) -> u8 {
+        let addr = self.get_addr();
+        let dest = self.get_addr();
+
+        if(dest < 0x2000) {
+            let result = closure(self.ram.load_byte(addr));
+            self.ram.store_byte(dest, result);
+        }
+    }
+
+    pub fn generate_cmp<F>(&mut self, closure: F) where F: Fn(u8, u8) -> bool {
+        let addr1 = self.get_addr();
+        let addr2 = self.get_addr();
+        if (closure(self.ram.load_byte(addr1), self.ram.load_byte(addr2))) {
+            self.regs.t = 1;
+        }
+    }
+
+    pub fn jump(&mut self) {
+        let val = self.load_word_increment_pc();
+        self.regs.pc = val;
+    }
+
+    pub fn tjmp(&mut self) {
+        if (self.regs.t != 0) {
+            self.jump();
+        } else {
+            self.regs.pc += 2;
+        }
+    }
+
+    pub fn fjmp(&mut self) {
+        if (self.regs.t == 0) {
+            self.jump();
+        } else {
+            self.regs.pc += 2;
+        }
+    }
+
+    pub fn bank(&mut self) {
+
+    }
+
+    pub fn rand(&mut self) {
+
     }
 }
