@@ -64,14 +64,31 @@ impl CPU {
             0x08 => self.mvya(),
             0x09 => self.mvta(),
             0x0A => self.mvpa(),
-            0x0B => self.addi(),
-            0x0C => self.subi(),
-            0x0D => self.muli(),
-            0x0E => self.divi(),
-            0x0F => self.modi(),
+            0x0B => self.generate_arithm(|x, y| {
+                x.wrapping_add(y)
+            }),
+            0x0C => self.generate_arithm(|x, y| {
+                x.wrapping_sub(y)
+            }),
+            0x0D => self.generate_arithm(|x, y| {
+                x.wrapping_mul(y)
+            }),
+            0x0E => self.generate_arithm(|x, y| {
+                x.wrapping_div(y)
+            }),
+            0x0F => self.generate_arithm(|x, y| {
+                x.wrapping_rem(y)
+            }),
             0x10 => self.swiz(),
-            0x11 => self.andi(),
-            0x12 => self.orli(),
+            0x11 => self.generate_arithm(|x, y| {
+                x & y
+            }),
+            0x12 => self.generate_arithm(|x, y| {
+                x | y
+            }),
+            0x13 => self.generate_arithm(|x, y| {
+                x ^ y
+            }),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -141,57 +158,16 @@ impl CPU {
         }
     }
 
-    pub fn addi(&mut self) {
+    pub fn generate_arithm<F>(&mut self, closure: F) where F: Fn(u8, u8) -> u8 {
         let addr1 = self.get_addr();
         let addr2 = self.get_addr();
         let addr3 = self.get_addr();
 
         if (addr3 < 0x2000) {
-            let result = self.ram.load_byte(addr1).wrapping_add(self.ram.load_byte(addr2));
-            self.ram.store_byte(addr3, result);
-        }
-    }
-
-    pub fn subi(&mut self) {
-        let addr1 = self.get_addr();
-        let addr2 = self.get_addr();
-        let addr3 = self.get_addr();
-
-        if (addr3 < 0x2000) {
-            let result = self.ram.load_byte(addr1).wrapping_sub(self.ram.load_byte(addr2));
-            self.ram.store_byte(addr3, result);
-        }
-    }
-
-    pub fn muli(&mut self) {
-        let addr1 = self.get_addr();
-        let addr2 = self.get_addr();
-        let addr3 = self.get_addr();
-
-        if (addr3 < 0x2000) {
-            let result = self.ram.load_byte(addr1).wrapping_mul(self.ram.load_byte(addr2));
-            self.ram.store_byte(addr3, result);
-        }
-    }
-
-    pub fn divi(&mut self) {
-        let addr1 = self.get_addr();
-        let addr2 = self.get_addr();
-        let addr3 = self.get_addr();
-
-        if (addr3 < 0x2000) {
-            let result = self.ram.load_byte(addr1).wrapping_div(self.ram.load_byte(addr2));
-            self.ram.store_byte(addr3, result);
-        }
-    }
-
-    pub fn modi(&mut self) {
-        let addr1 = self.get_addr();
-        let addr2 = self.get_addr();
-        let addr3 = self.get_addr();
-
-        if (addr3 < 0x2000) {
-            let result = self.ram.load_byte(addr1).wrapping_rem(self.ram.load_byte(addr2));
+            let result = closure(
+                self.ram.load_byte(addr1),
+                self.ram.load_byte(addr2)
+            );
             self.ram.store_byte(addr3, result);
         }
     }
@@ -208,13 +184,5 @@ impl CPU {
             );
             self.ram.store_word(addr3, result);
         }
-    }
-
-    pub fn andi(&mut self) {
-
-    }
-
-    pub fn orli(&mut self) {
-
     }
 }
