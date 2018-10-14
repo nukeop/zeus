@@ -10,43 +10,49 @@ import rustModules from '../native/index.node';
 
 import styles from './styles.scss';
 
-let screen = rustModules.getScreen();
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      screen: rustModules.getScreen()
+    };
+  }
 
-const openRomDialog = () => {
-  let filename = remote.dialog.showOpenDialog({
-    properties: ['openFile'],
-    filters: [
-      {name: 'ROM', extensions: ['zeus']}
-    ]
-  })[0];
-  console.log(rustModules.loadRom(filename));  
-};
+  openRomDialog() {
+    let filename = remote.dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        {name: 'ROM', extensions: ['zeus']}
+      ]
+    })[0];
+    console.log(rustModules.loadRom(filename));  
+  }
 
-const step = () => {
-  rustModules.step();
-  screen = rustModules.getScreen();
-};
+  step() {
+    rustModules.step();
+    this.setState({screen: rustModules.getScreen()});
+  }
 
-const App = () => {
-  return (
-    <div className={styles.app_container}>
-      <div className={styles.column}>
-        <Menu>
-          <MenuItem onClick={openRomDialog}>Load ROM</MenuItem>
-          <MenuItem onClick={step}>Step</MenuItem>
-        </Menu>
-        <ScreenDecoration>
-          <Screen
-            screenData={screen}
-          />
-        </ScreenDecoration>
-        <Title>
-          9999 in 1
-        </Title>
+  render() {
+    return (
+      <div className={styles.app_container}>
+        <div className={styles.column}>
+          <Menu>
+            <MenuItem onClick={this.openRomDialog}>Load ROM</MenuItem>
+            <MenuItem onClick={this.step.bind(this)}>Step</MenuItem>
+          </Menu>
+          <ScreenDecoration>
+            <Screen
+              screenData={this.state.screen}
+            />
+          </ScreenDecoration>
+          <Title>
+            9999 in 1
+          </Title>
+        </div>
       </div>
-      
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default App;
