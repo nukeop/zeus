@@ -11,7 +11,13 @@ const Pixel = props => {
       common.zeus,
       styles.pixel,
       {[`${styles.on}`]: props.on}     
-    )} />
+    )} >
+      {
+        props.on
+          ? <div className={styles.inner} />
+          : null
+      }
+    </div>
   );
 };
 

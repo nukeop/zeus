@@ -1,10 +1,22 @@
 @import '../../colors.scss';
 
 .pixel {
+  position: relative;
+  display: flex;
+  justify-content:center;
+  align-items: center;
   width: 1em;
   height: 1em;
   
   &.on {
     background-color: $darkest;
+  }
+
+  .inner {
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    background-color: $darkest;
+    border: 0.125em solid $lightest;
   }
 }
