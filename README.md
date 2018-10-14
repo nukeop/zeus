@@ -78,3 +78,16 @@ The table below lists reserved memory areas and their purpose.
 | 0x00 - 0x27 | Screen control    | The contents of these 40 bytes control the display. At the end of each frame, the screen is synchronized with this memory range by interpreting subsequent bits as pixels, row by row.                                                                                                                                                                                                                                             |
 | 0x28        | Button inputs     | The device's buttons are stored in a single byte at this address. Each bit represents a single button and it is flipped as the button is pressed and released. 1 means a button is down, 0 means up. The 0th bit is the left d-pad button, 1st - up, 2nd - right, 3rd - down, 4th - A, 5th - B. 6th and 7th are unused. Writing to this memory has no effect, and it will be overwritten the next time any button's state changes. |
 | 0x29 - 0x35 | 7-segment display | There are two 5-digit displays, and two 2-digit displays, for a total of 14 digits. This memory area controls their state, with each byte representing one digit.                                                                                                                                                                                                                                                                  |
+
+## ROMs
+
+ROMs are binary files comprising of a header and game data.
+The structure of the header is as follows:
+
+| Field name   | Size (bytes) | Description                                                                                                                                |
+|--------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| Magic number | 4            | Magic number so that the program can confirm it's the correct file format. Must always be equal to 0x5A 0x45 0x0x55 0x53 (uppercase zeus). |
+| Version      | 3            | Version of the file normat. The subsequent bytes represent the major, minor, and patch version.                                            |
+| Reserved     | 25           | Reserved for future use, padding the header to 32 bytes total. Ignored for now, should be filled with zeroes.                              |
+
+After the header section comes the game data. It's read as is and padded with zeroes to 56kb. The game data will be split into 56kb memory banks (up to 256) if there's more data in the file. In this case, the last bank will be padded.
