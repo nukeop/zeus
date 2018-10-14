@@ -76,26 +76,33 @@ impl CPU {
             0x08 => self.mvya(),
             0x09 => self.mvta(),
             0x0A => self.mvpa(),
-            0x0B => self.generate_binary(|x, y| x.wrapping_add(y)),
-            0x0C => self.generate_binary(|x, y| x.wrapping_sub(y)),
-            0x0D => self.generate_binary(|x, y| x.wrapping_mul(y)),
-            0x0E => self.generate_binary(|x, y| x.wrapping_div(y)),
-            0x0F => self.generate_binary(|x, y| x.wrapping_rem(y)),
-            0x10 => self.swiz(),
-            0x11 => self.generate_binary(|x, y| x & y),
-            0x12 => self.generate_binary(|x, y| x | y),
-            0x13 => self.generate_binary(|x, y| x ^ y),
-            0x14 => self.generate_unary(|x| !x),
-            0x15 => self.generate_unary(|x| x << 1),
-            0x16 => self.generate_unary(|x| x >> 1),
-            0x17 => self.generate_cmp(|x, y| x == y),
-            0x18 => self.generate_cmp(|x, y| x > y),
-            0x19 => self.generate_cmp(|x, y| x < y),
-            0x20 => self.jump(),
-            0x21 => self.tjmp(),
-            0x22 => self.fjmp(),
-            0x23 => self.bank(),
-            0x24 => self.rand(),
+            0x0B => self.addx(),
+            0x0C => self.addy(),
+            0x0D => self.addt(),
+            0x0E => self.subx(),
+            0x0F => self.suby(),
+            0x10 => self.subt(),
+            0x11 => self.copy(),            
+            0x12 => self.generate_binary(|x, y| x.wrapping_add(y)),
+            0x13 => self.generate_binary(|x, y| x.wrapping_sub(y)),
+            0x14 => self.generate_binary(|x, y| x.wrapping_mul(y)),
+            0x15 => self.generate_binary(|x, y| x.wrapping_div(y)),
+            0x16 => self.generate_binary(|x, y| x.wrapping_rem(y)),
+            0x17 => self.swiz(),
+            0x18 => self.generate_binary(|x, y| x & y),
+            0x19 => self.generate_binary(|x, y| x | y),
+            0x1A => self.generate_binary(|x, y| x ^ y),
+            0x1B => self.generate_unary(|x| !x),
+            0x1C => self.generate_unary(|x| x << 1),
+            0x1D => self.generate_unary(|x| x >> 1),
+            0x1E => self.generate_cmp(|x, y| x == y),
+            0x1F => self.generate_cmp(|x, y| x > y),
+            0x20 => self.generate_cmp(|x, y| x < y),
+            0x21 => self.jump(),
+            0x22 => self.tjmp(),
+            0x23 => self.fjmp(),
+            0x24 => self.bank(),
+            0x25 => self.rand(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -190,6 +197,45 @@ impl CPU {
                 self.ram.load_word(addr2)
             );
             self.ram.store_word(dest, result);
+        }
+    }
+
+    pub fn addx(&mut self) {
+        let val = self.load_byte_increment_pc();
+        self.regs.x = self.regs.x.wrapping_add(val);
+    }
+
+    pub fn addy(&mut self) {
+        let val = self.load_byte_increment_pc();
+        self.regs.y = self.regs.y.wrapping_add(val);
+    }
+
+    pub fn addt(&mut self) {
+        let val = self.load_byte_increment_pc();
+        self.regs.t = self.regs.t.wrapping_add(val);
+    }
+
+    pub fn subx(&mut self) {
+        let val = self.load_byte_increment_pc();
+        self.regs.x = self.regs.x.wrapping_sub(val);
+    }
+
+    pub fn suby(&mut self) {
+        let val = self.load_byte_increment_pc();
+        self.regs.y = self.regs.y.wrapping_sub(val);
+    }
+
+    pub fn subt(&mut self) {
+        let val = self.load_byte_increment_pc();
+        self.regs.t = self.regs.t.wrapping_sub(val);
+    }
+
+    pub fn copy(&mut self) {
+        let val = self.load_byte_increment_pc();
+        let dest = self.get_addr();
+
+        if(dest < 0x2000) {
+            self.ram.store_byte(dest, val);
         }
     }
 

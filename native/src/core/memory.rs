@@ -37,7 +37,7 @@ impl Memory for RAM {
         if addr < 0x2000 {
             self.mem[addr as usize & 0x1fff] = val;
         } else {
-            self.rom_mem[(addr - 0x2000) as usize] = val;
+            panic!("Can't write to ROM");
         }
     }
 }
