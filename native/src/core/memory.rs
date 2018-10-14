@@ -11,23 +11,33 @@ pub trait Memory {
 }
 
 pub struct RAM {
-    pub mem: [u8; 0x2000]
+    pub mem: [u8; 0x2000],
+    pub rom_mem: [u8; 0xE000]
 }
 
 impl RAM {
     pub fn new() -> RAM {
         RAM {
-            mem: [0; 0x2000]
+            mem: [0; 0x2000],
+            rom_mem: [0; 0xE000]
         }
     }
 }
 
 impl Memory for RAM {
     fn load_byte(&mut self, addr: u16) -> u8 {
-        self.mem[addr as usize & 0x1fff]
+        if addr < 0x2000 {
+            self.mem[addr as usize & 0x1fff]
+        } else {
+            self.rom_mem[(addr - 0x2000) as usize]
+        }
     }
 
     fn store_byte(&mut self, addr: u16, val: u8) {
-        self.mem[addr as usize & 0x1fff] = val;
+        if addr < 0x2000 {
+            self.mem[addr as usize & 0x1fff] = val;
+        } else {
+            self.rom_mem[(addr - 0x2000) as usize] = val;
+        }
     }
 }

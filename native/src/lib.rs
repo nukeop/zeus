@@ -27,11 +27,16 @@ fn step(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     Ok(cx.undefined())
 }
 
+fn load_rom(mut cx: FunctionContext) -> JsResult<JsObject> {
+    zeus.lock().unwrap().load_rom(cx)
+}
+
 
 register_module!(mut cx, {
     cx.export_function("getMemory", get_memory);
     cx.export_function("getScreen", get_screen);
     cx.export_function("step", step);
+    cx.export_function("loadRom", load_rom);
     
     Ok(())
 });

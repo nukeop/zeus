@@ -1,5 +1,6 @@
 use core::arithm::swizzle;
 use core::memory::{RAM,Memory};
+use core::rom::Rom;
 
 pub struct Registers {
     x: u8,
@@ -35,6 +36,10 @@ impl CPU {
     pub fn step(&mut self) {
         let next = self.load_byte_increment_pc();
         self.decode(next);
+    }
+
+    pub fn reset(&mut self) {
+        self.regs = Registers::new();
     }
 
     pub fn load_byte_increment_pc(&mut self) -> u8 {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { remote } from 'electron';
 
 import Screen from './components/Screen';
 import ScreenDecoration from './components/ScreenDecoration';
@@ -9,19 +10,34 @@ import rustModules from '../native/index.node';
 
 import styles from './styles.scss';
 
-const App = () => {
+let screen = rustModules.getScreen();
+
+const openRomDialog = () => {
+  let filename = remote.dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      {name: 'ROM', extensions: ['zeus']}
+    ]
+  })[0];
+  console.log(rustModules.loadRom(filename));  
+};
+
+const step = () => {
   rustModules.step();
-  console.log(rustModules.getMemory());
-  console.log(rustModules.getScreen());
+  screen = rustModules.getScreen();
+};
+
+const App = () => {
   return (
     <div className={styles.app_container}>
       <div className={styles.column}>
         <Menu>
-          <MenuItem>Load ROM</MenuItem>
+          <MenuItem onClick={openRomDialog}>Load ROM</MenuItem>
+          <MenuItem onClick={step}>Step</MenuItem>
         </Menu>
         <ScreenDecoration>
           <Screen
-            screenData={rustModules.getScreen()}
+            screenData={screen}
           />
         </ScreenDecoration>
         <Title>
