@@ -1,5 +1,5 @@
 {
-  "name": "brick-game",
+  "name": "zeus",
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
@@ -38,6 +38,7 @@
     "html-webpack-plugin": "^3.2.0",
     "neon-cli": "^0.2.0",
     "node-loader": "^0.6.0",
+    "node-sass": "^4.9.3",
     "prop-types": "^15.6.2",
     "react-hot-loader": "^4.3.11",
     "react-redux": "^5.0.7",

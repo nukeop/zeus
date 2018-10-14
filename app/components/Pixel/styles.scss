@@ -1,0 +1,10 @@
+@import '../../colors.scss';
+
+.pixel {
+  width: 1em;
+  height: 1em;
+  
+  &.on {
+    background-color: $darkest;
+  }
+}

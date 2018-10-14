@@ -13,19 +13,25 @@ lazy_static! {
     static ref zeus: Mutex<Zeus> = Mutex::new(Zeus::new());
 }
 
-fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
-    Ok(cx.string("hello node"))
-}
-
 fn get_memory(mut cx: FunctionContext) -> JsResult<JsArray> {
     zeus.lock().unwrap().get_memory(cx)
 }
 
+fn get_screen(mut cx: FunctionContext) -> JsResult<JsArray> {
+    zeus.lock().unwrap().get_screen(cx)
+}
+
+fn step(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    zeus.lock().unwrap().step();
+
+    Ok(cx.undefined())
+}
+
 
 register_module!(mut cx, {
-    cx.export_function("hello", hello);
     cx.export_function("getMemory", get_memory);
+    cx.export_function("getScreen", get_screen);
+    cx.export_function("step", step);
     
     Ok(())
-        
 });
