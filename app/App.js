@@ -18,6 +18,10 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    setInterval(this.step.bind(this), 17);
+  }
+
   openRomDialog() {
     let filename = remote.dialog.showOpenDialog({
       properties: ['openFile'],

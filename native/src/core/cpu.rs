@@ -6,7 +6,8 @@ pub struct Registers {
     x: u8,
     y: u8,
     t: u8,
-    pc: u16
+    pc: u16,
+    n: u16
 }
 
 impl Registers {
@@ -15,7 +16,8 @@ impl Registers {
             x: 0,
             y: 0,
             t: 0,
-            pc: 0x2000
+            pc: 0x2000,
+            n: 0
         }
     }
 }
@@ -101,8 +103,9 @@ impl CPU {
             0x21 => self.jump(),
             0x22 => self.tjmp(),
             0x23 => self.fjmp(),
-            0x24 => self.bank(),
-            0x25 => self.rand(),
+            0x24 => self.rjmp(),
+            0x25 => self.bank(),
+            0x26 => self.rand(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -276,6 +279,10 @@ impl CPU {
         } else {
             self.regs.pc += 2;
         }
+    }
+
+    pub fn rjmp(&mut self) {
+
     }
 
     pub fn bank(&mut self) {

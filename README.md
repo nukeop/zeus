@@ -15,6 +15,9 @@ Fictional cheap, Russian, electronic handheld game.
 
 ## CPU
 
+The cpu is intended to perform at a fixed speed of processing 65535 operations between every two frames. This makes the device state portable, and, excluding the button inputs, completely deterministic.
+
+
 ### Registers
 
 | Register | Size | Purpose                                                                                                                          |
@@ -23,7 +26,18 @@ Fictional cheap, Russian, electronic handheld game.
 | Y        | 8    | General purpose register.                                                                                                        |
 | T        | 8    | General purpose register. Also stores the results of some operations.                                                            |
 | PC       | 16   | Program counter. Initially set to 0x2000. This is where the attached ROM with a game begins (addresses 0x0000 - 0x1FFF are RAM). |
+| N        | 16   | Instruction count for current frame. Only used by internal logic, inaccessible and invisible for user programs.                  |
 
+
+### Operation
+
+The following steps define the operation of the CPU:
+* Read the byte at the address stored in PC
+* Execute the instruction identified by this opcode
+* Increment PC
+* Increment N
+* If N == 0xFF, sync screen with memory
+* Go to start
 
 ### Instruction set
 
@@ -68,8 +82,9 @@ All opcodes are 1-byte long, which means there is a maximum of 256 instructions,
 | 0x21   | JUMP        | Immediate, 2 bytes           | Move the next two bytes to PC, moving execution to that address. Since there's no distinction between data and instructions, it can be anywhere in memory.                                                                                                                                                                                                                            |
 | 0x22   | TJMP        | Immediate, 2 bytes           | As above, but jump only if T is not zero.                                                                                                                                                                                                                                                                                                                                             |
 | 0x23   | FJMP        | Immediate, 2 bytes           | As above, but jump only if T is zero.                                                                                                                                                                                                                                                                                                                                                 |
-| 0x24   | BANK        | Immediate, 1 byte            | Load the memory bank of current rom selected by the next byte, then set PC to 0x2000.                                                                                                                                                                                                                                                                                                 |
-| 0x25   | RAND        | See explanation, 4 bytes     | Interpret the next two bytes as lower and higher bound, then generate a random number between them (inclusive). Store it at the address given by the last two bytes.                                                                                                                                                                                                                  |
+| 0x24   | RJMP        | Immediate, 3 bytes           | Relative jump. The first byte after this instruction will be interpreted as a sign (negaitve if 0, positive otherwise). Then, execution will jump backwards or forwards by the number of bytes read from the subsequent 2 bytes depending on that sign.                                                                                                                               |
+| 0x25   | BANK        | Immediate, 1 byte            | Load the memory bank of current rom selected by the next byte, then set PC to 0x2000.                                                                                                                                                                                                                                                                                                 |
+| 0x26   | RAND        | See explanation, 4 bytes     | Interpret the next two bytes as lower and higher bound, then generate a random number between them (inclusive). Store it at the address given by the last two bytes.                                                                                                                                                                                                                  |
 
 ## Memory
 
@@ -82,9 +97,9 @@ The table below lists reserved memory areas and their purpose.
 
 | Range       | Purpose           | Details                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |-------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0x00 - 0x27 | Screen control    | The contents of these 40 bytes control the display. At the end of each frame, the screen is synchronized with this memory range by interpreting subsequent bits as pixels, row by row.                                                                                                                                                                                                                                             |
-| 0x28        | Button inputs     | The device's buttons are stored in a single byte at this address. Each bit represents a single button and it is flipped as the button is pressed and released. 1 means a button is down, 0 means up. The 0th bit is the left d-pad button, 1st - up, 2nd - right, 3rd - down, 4th - A, 5th - B. 6th and 7th are unused. Writing to this memory has no effect, and it will be overwritten the next time any button's state changes. |
-| 0x29 - 0x35 | 7-segment display | There are two 5-digit displays, and two 2-digit displays, for a total of 14 digits. This memory area controls their state, with each byte representing one digit.                                                                                                                                                                                                                                                                  |
+| 0x0000 - 0x0027 | Screen control    | The contents of these 40 bytes control the display. At the end of each frame, the screen is synchronized with this memory range by interpreting subsequent bits as pixels, row by row.                                                                                                                                                                                                                                             |
+| 0x0028        | Button inputs     | The device's buttons are stored in a single byte at this address. Each bit represents a single button and it is flipped as the button is pressed and released. 1 means a button is down, 0 means up. The 0th bit is the left d-pad button, 1st - up, 2nd - right, 3rd - down, 4th - A, 5th - B. 6th and 7th are unused. Writing to this memory has no effect, and it will be overwritten the next time any button's state changes. |
+| 0x0029 - 0x0035 | 7-segment display | There are two 5-digit displays, and two 2-digit displays, for a total of 14 digits. This memory area controls their state, with each byte representing one digit.                                                                                                                                                                                                                                                                  |
 
 ## ROMs
 
@@ -98,3 +113,8 @@ The structure of the header is as follows:
 | Reserved     | 25           | Reserved for future use, padding the header to 32 bytes total. Ignored for now, should be filled with zeroes.                              |
 
 After the header section comes the game data. It's read as is and padded with zeroes to 56kb. The game data will be split into 56kb memory banks (up to 256) if there's more data in the file. In this case, the last bank will be padded.
+
+## Rendering
+
+No dedicated graphics unit.
+As described in the RAM section, memory range 0x0000 - 0x0027 is mapped onto the screen. The contents of memory in this section are synchronized with screen state 30 times per second, instantly, between cpu instructions (so there's no way to change anything between rendering phases).
