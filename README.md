@@ -33,8 +33,8 @@ The cpu is intended to perform at a fixed speed of processing 65535 operations b
 
 The following steps define the operation of the CPU:
 * Read the byte at the address stored in PC
-* Execute the instruction identified by this opcode
 * Increment PC
+* Execute the instruction identified by this opcode
 * Increment N
 * If N == 0xFF, sync screen with memory
 * Go to start

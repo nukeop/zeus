@@ -36,8 +36,16 @@ impl CPU {
     }
 
     pub fn step(&mut self) {
-        let next = self.load_byte_increment_pc();
+        let next = self.load_byte_increment_pc();        
         self.decode(next);
+        self.regs.n.wrapping_add(1);
+        if (self.regs.n == 0xFF) {
+            self.sync();
+        }
+    }
+
+    pub fn sync(&mut self) {
+        
     }
 
     pub fn reset(&mut self) {
