@@ -20,13 +20,14 @@ The cpu is intended to perform at a fixed speed of processing 65535 operations b
 
 ### Registers
 
-| Register | Size | Purpose                                                                                                                          |
-|----------|------|----------------------------------------------------------------------------------------------------------------------------------|
-| X        | 8    | General purpose register.                                                                                                        |
-| Y        | 8    | General purpose register.                                                                                                        |
-| T        | 8    | General purpose register. Also stores the results of some operations.                                                            |
-| PC       | 16   | Program counter. Initially set to 0x2000. This is where the attached ROM with a game begins (addresses 0x0000 - 0x1FFF are RAM). |
-| N        | 16   | Instruction count for current frame. Only used by internal logic, inaccessible and invisible for user programs.                  |
+| Register | Size | Purpose                                                                                                                                                                                       |
+|----------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| X        | 8    | General purpose register.                                                                                                                                                                     |
+| Y        | 8    | General purpose register.                                                                                                                                                                     |
+| T        | 8    | General purpose register. Also stores the results of some operations.                                                                                                                         |
+| S        | 8    | Status register. Interpreted as 8 1-bit flags. First flags represents waiting status (triggered by opcode 0x27), cleared when N is incremented. The other 7 bits are reserved for future use. |
+| PC       | 16   | Program counter. Initially set to 0x2000. This is where the attached ROM with a game begins (addresses 0x0000 - 0x1FFF are RAM).                                                              |
+| N        | 16   | Instruction count for current frame. Only used by internal logic, inaccessible and invisible for user programs.                                                                               |
 
 
 ### Operation
@@ -85,6 +86,7 @@ All opcodes are 1-byte long, which means there is a maximum of 256 instructions,
 | 0x24   | RJMP        | Immediate, 3 bytes           | Relative jump. The first byte after this instruction will be interpreted as a sign (negaitve if 0, positive otherwise). Then, execution will jump backwards or forwards by the number of bytes read from the subsequent 2 bytes depending on that sign.                                                                                                                               |
 | 0x25   | BANK        | Immediate, 1 byte            | Load the memory bank of current rom selected by the next byte, then set PC to 0x2000.                                                                                                                                                                                                                                                                                                 |
 | 0x26   | RAND        | See explanation, 4 bytes     | Interpret the next two bytes as lower and higher bound, then generate a random number between them (inclusive). Store it at the address given by the last two bytes.                                                                                                                                                                                                                  |
+| 0x27   | WAIT        | None                         | Pause execution for the remainder of the current frame, then resume after N is incremented.                                                                                                                                                                                                                                                                                           |
 
 ## Memory
 

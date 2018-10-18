@@ -38,10 +38,10 @@ impl Zeus {
 
     pub fn get_screen<'a>(&mut self, mut cx: FunctionContext<'a>) -> JsResult<'a, JsArray> {
         let arr = cx.empty_array();
-        let screen_mem = self.cpu.ram.mem.iter().take(40);
+        let screen_pixels = self.cpu.screen.pixels.iter().take(40);
         let mut j = 0;
         
-        for (i, byte) in screen_mem.enumerate() {
+        for byte in screen_pixels {
             let values = [
                 cx.boolean(byte & 0x80 != 0),
                 cx.boolean(byte & 0x40 != 0),

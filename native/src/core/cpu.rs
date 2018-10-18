@@ -7,6 +7,7 @@ pub struct Registers {
     x: u8,
     y: u8,
     t: u8,
+    s: u8,
     pc: u16,
     n: u16
 }
@@ -17,6 +18,7 @@ impl Registers {
             x: 0,
             y: 0,
             t: 0,
+            s: 0,
             pc: 0x2000,
             n: 0
         }
@@ -122,6 +124,7 @@ impl CPU {
             0x24 => self.rjmp(),
             0x25 => self.bank(),
             0x26 => self.rand(),
+            0x27 => self.wait()
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -306,6 +309,10 @@ impl CPU {
     }
 
     pub fn rand(&mut self) {
+
+    }
+
+    pub fn wait(&mut self) {
 
     }
 }
