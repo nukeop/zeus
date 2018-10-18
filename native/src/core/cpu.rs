@@ -1,6 +1,7 @@
 use core::arithm::swizzle;
 use core::memory::{RAM,Memory};
 use core::rom::Rom;
+use core::screen::ScreenDriver;
 
 pub struct Registers {
     x: u8,
@@ -24,14 +25,16 @@ impl Registers {
 
 pub struct CPU {
     pub regs: Registers,
-    pub ram: RAM
+    pub ram: RAM,
+    pub screen: ScreenDriver
 }
 
 impl CPU {
     pub fn new() -> CPU {
         CPU {
             regs: Registers::new(),
-            ram: RAM::new()
+            ram: RAM::new(),
+            screen: ScreenDriver::new(16, 20)
         }
     }
 
@@ -45,7 +48,12 @@ impl CPU {
     }
 
     pub fn sync(&mut self) {
-        
+        let screen_mem = self.ram.mem
+            .iter()
+            .take(40);
+        for (i, byte) in screen_mem.enumerate() {
+            self.screen.pixels[i] = *byte;
+        }
     }
 
     pub fn reset(&mut self) {
