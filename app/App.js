@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(this.step.bind(this), 17);
+    setInterval(this.step.bind(this), 34);
   }
 
   openRomDialog() {
@@ -34,7 +34,8 @@ class App extends React.Component {
 
   step() {
     rustModules.step();
-    this.setState({screen: rustModules.getScreen()});
+    let screen = rustModules.getScreen();
+    this.setState({screen});
   }
 
   render() {

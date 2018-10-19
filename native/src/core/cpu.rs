@@ -40,17 +40,25 @@ impl CPU {
         }
     }
 
+    pub fn run_frame(&mut self) {
+        loop {
+            self.step();
+            if(self.regs.n == 0) {
+                break;
+            }
+        }
+    }
+    
     pub fn step(&mut self) {
-        if (self.regs.s | 0x80 == 0) {
-            let next = self.load_byte_increment_pc();        
-            self.decode(next);
-            self.regs.n.wrapping_add(1);
-        }
-        
-        if (self.regs.n == 0xFF) {
+        if (self.regs.n == 0xFFFF) {
             self.sync();
-            self.regs.s &= 0x7F;
+        } else {
+            let next = self.load_byte_increment_pc();
+            println!("Opcode: 0x{:X}", next);
+            self.decode(next);
         }
+
+        self.regs.n.wrapping_add(1);
     }
 
     pub fn sync(&mut self) {
@@ -128,7 +136,7 @@ impl CPU {
             0x24 => self.rjmp(),
             0x25 => self.bank(),
             0x26 => self.rand(),
-            0x27 => self.wait()
+            0x27 => self.wait(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -317,6 +325,6 @@ impl CPU {
     }
 
     pub fn wait(&mut self) {
-
+        self.regs.n = 0xFFFF;
     }
 }
