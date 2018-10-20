@@ -114,30 +114,32 @@ impl CPU {
             0x0E => self.subx(),
             0x0F => self.suby(),
             0x10 => self.subt(),
-            0x11 => self.copy(),            
-            0x12 => self.generate_binary(|x, y| x.wrapping_add(y)),
-            0x13 => self.generate_binary(|x, y| x.wrapping_sub(y)),
-            0x14 => self.generate_binary(|x, y| x.wrapping_mul(y)),
-            0x15 => self.generate_binary(|x, y| x.wrapping_div(y)),
-            0x16 => self.generate_binary(|x, y| x.wrapping_rem(y)),
-            0x17 => self.swiz(),
-            0x18 => self.generate_binary(|x, y| x & y),
-            0x19 => self.generate_binary(|x, y| x | y),
-            0x1A => self.generate_binary(|x, y| x ^ y),
-            0x1B => self.generate_unary(|x| !x),
-            0x1C => self.generate_unary(|x| x << 1),
-            0x1D => self.generate_unary(|x| x >> 1),
-            0x1E => self.generate_cmp(|x, y| x == y),
-            0x1F => self.generate_cmp(|x, y| x > y),
-            0x20 => self.generate_cmp(|x, y| x < y),
-            0x21 => self.jump(),
-            0x22 => self.tjmp(),
-            0x23 => self.fjmp(),
-            0x24 => self.rjmp(),
-            0x25 => self.bank(),
-            0x26 => self.rand(),
-            0x27 => self.wait(),
-            0x28 => self.clrs(),
+            0x11 => self.copy(),
+            0x12 => self.cpid(),
+            0x13 => self.cpir(),
+            0x14 => self.generate_binary(|x, y| x.wrapping_add(y)),
+            0x15 => self.generate_binary(|x, y| x.wrapping_sub(y)),
+            0x16 => self.generate_binary(|x, y| x.wrapping_mul(y)),
+            0x17 => self.generate_binary(|x, y| x.wrapping_div(y)),
+            0x18 => self.generate_binary(|x, y| x.wrapping_rem(y)),
+            0x19 => self.swiz(),
+            0x1A => self.generate_binary(|x, y| x & y),
+            0x1B => self.generate_binary(|x, y| x | y),
+            0x1C => self.generate_binary(|x, y| x ^ y),
+            0x1D => self.generate_unary(|x| !x),
+            0x1E => self.generate_unary(|x| x << 1),
+            0x1F => self.generate_unary(|x| x >> 1),
+            0x20 => self.generate_cmp(|x, y| x == y),
+            0x21 => self.generate_cmp(|x, y| x > y),
+            0x22 => self.generate_cmp(|x, y| x < y),
+            0x23 => self.jump(),
+            0x24 => self.tjmp(),
+            0x25 => self.fjmp(),
+            0x26 => self.rjmp(),
+            0x27 => self.bank(),
+            0x28 => self.rand(),
+            0x29 => self.wait(),
+            0x2A => self.clrs(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -268,6 +270,27 @@ impl CPU {
     pub fn copy(&mut self) {
         let val = self.load_byte_increment_pc();
         let dest = self.get_addr();
+
+        if(dest < 0x2000) {
+            self.ram.store_byte(dest, val);
+        }
+    }
+
+    pub fn cpid(&mut self) {
+        let src = self.get_addr();
+        let dest = self.get_addr() + self.regs.y as u16;
+
+        let val = self.ram.load_byte(src);
+
+        if(dest < 0x2000) {
+            self.ram.store_byte(dest, val);
+        }
+    }
+
+    pub fn cpir(&mut self) {
+        let src = self.get_addr() + self.regs.y as u16;
+        let dest = self.get_addr();
+        let val = self.ram.load_byte(src);
 
         if(dest < 0x2000) {
             self.ram.store_byte(dest, val);
