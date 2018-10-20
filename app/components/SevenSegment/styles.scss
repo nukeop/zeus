@@ -21,17 +21,12 @@
   
   .segment {
     position: absolute;
-    background-color: $light;
-    
-    &.on {
-      background-color: $darkest;
-    }
 
     &.a {
       left: 5px;
       height: 0;
       width: 9px;
-      border-top: 3px solid $dark;
+      border-top: 3px solid $light;
       border-left: 3px solid transparent;
       border-right: 3px solid transparent;
     }
@@ -41,7 +36,7 @@
       top: 2px;
       height: 7px;
       width: 0;
-      border-right: 3px solid $dark;
+      border-right: 3px solid $light;
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
@@ -52,7 +47,7 @@
       top: 15px;
       height: 7px;
       width: 0;
-      border-right: 3px solid $dark;
+      border-right: 3px solid $light;
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
@@ -63,7 +58,7 @@
       top: 27px;
       height: 0;
       width: 9px;
-      border-bottom: 3px solid $dark;
+      border-bottom: 3px solid $light;
       border-left: 3px solid transparent;
       border-right: 3px solid transparent;
     }
@@ -73,7 +68,7 @@
       top: 15px;
       height: 7px;
       width: 0;
-      border-left: 3px solid $dark;
+      border-left: 3px solid $light;
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
@@ -84,7 +79,7 @@
       top: 2px;
       height: 7px;
       width: 0;
-      border-left: 3px solid $dark;
+      border-left: 3px solid $light;
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
@@ -97,7 +92,7 @@
       .top {
         height: 0;
         width: 9px;
-        border-bottom: 1.5px solid $dark;
+        border-bottom: 1.5px solid $light;
         border-left: 3px solid transparent;
         border-right: 3px solid transparent;
       }
@@ -105,7 +100,7 @@
       .bottom {
         height: 0;
         width: 9px;
-        border-top: 1.5px solid $dark;
+        border-top: 1.5px solid $light;
         border-left: 3px solid transparent;
         border-right: 3px solid transparent;
       }

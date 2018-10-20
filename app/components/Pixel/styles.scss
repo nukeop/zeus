@@ -7,6 +7,7 @@
   align-items: center;
   width: 1em;
   height: 1em;
+  background-color: $light;
   
   &.on {
     background-color: $darkest;
@@ -16,7 +17,14 @@
     display: block;
     width: 0.5em;
     height: 0.5em;
+    background-color: $light;
+    border: 0.125em solid $lightest;
+  }
+  
+  &.on .inner { 
     background-color: $darkest;
     border: 0.125em solid $lightest;
   }
+
+
 }

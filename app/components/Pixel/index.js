@@ -12,11 +12,7 @@ const Pixel = props => {
       styles.pixel,
       {[`${styles.on}`]: props.on}     
     )} >
-      {
-        props.on
-          ? <div className={styles.inner} />
-          : null
-      }
+      <div className={styles.inner} />
     </div>
   );
 };
