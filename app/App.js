@@ -3,6 +3,7 @@ import { remote } from 'electron';
 
 import Screen from './components/Screen';
 import ScreenDecoration from './components/ScreenDecoration';
+import SevenSegment from './components/SevenSegment';
 import Menu from './components/Menu';
 import MenuItem from './components/MenuItem';
 import Title from './components/Title';
@@ -44,13 +45,14 @@ class App extends React.Component {
             <MenuItem onClick={this.step.bind(this)}>Step</MenuItem>
           </Menu>
           <ScreenDecoration>
+            <SevenSegment />
             <Screen
               screenData={this.state.screen}
             />
           </ScreenDecoration>
           <Title>
             9999 in 1
-          </Title>
+          </Title>          
         </div>
       </div>
     );

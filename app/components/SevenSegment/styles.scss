@@ -1,0 +1,116 @@
+@import '../../colors.scss';
+
+.seven_segment {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  background-color: $lightest;
+  margin-bottom: 1em;
+  padding: 0.25em 0.25em;
+  height: 2em;
+  width: 15.5em;
+  border: 0.25em solid $darkest;
+
+  .digit {
+    display: inline-block;
+    position: relative;
+    width: 18px;
+    height: 38px;
+    padding: 0px 2px;
+  }
+  
+  .segment {
+    position: absolute;
+    background-color: $light;
+    
+    &.on {
+      background-color: $darkest;
+    }
+
+    &.a {
+      left: 5px;
+      height: 0;
+      width: 9px;
+      border-top: 3px solid $dark;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+    }
+
+    &.b {
+      left: 18px;
+      top: 2px;
+      height: 7px;
+      width: 0;
+      border-right: 3px solid $dark;
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      transform: rotate(6deg);
+    }
+
+    &.c {
+      left: 17px;
+      top: 15px;
+      height: 7px;
+      width: 0;
+      border-right: 3px solid $dark;
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      transform: rotate(6deg);
+    }
+
+    &.d {
+      left: 3px;
+      top: 27px;
+      height: 0;
+      width: 9px;
+      border-bottom: 3px solid $dark;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+    }
+
+    &.e {
+      left: 2px;
+      top: 15px;
+      height: 7px;
+      width: 0;
+      border-left: 3px solid $dark;
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      transform: rotate(6deg);
+    }
+
+    &.f {
+      left: 3px;
+      top: 2px;
+      height: 7px;
+      width: 0;
+      border-left: 3px solid $dark;
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      transform: rotate(6deg);
+    }
+
+    &.g {
+      top: 13px;
+      left: 4px;
+      
+      .top {
+        height: 0;
+        width: 9px;
+        border-bottom: 1.5px solid $dark;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+      }
+
+      .bottom {
+        height: 0;
+        width: 9px;
+        border-top: 1.5px solid $dark;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+      }
+    }
+  }
+}
+
+
