@@ -1,6 +1,8 @@
 # zeus
 Fictional cheap, Russian, electronic handheld game. 
 
+![screenshot](https://i.imgur.com/ciLLM9T.png)
+
 ## Technical specification
 
 * 8-bit CPU
