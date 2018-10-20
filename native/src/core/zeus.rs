@@ -36,11 +36,12 @@ impl Zeus {
         Ok(arr)
     }
 
-    pub fn get_screen<'a>(&mut self, mut cx: FunctionContext<'a>) -> JsResult<'a, JsArray> {
+    pub fn screen_to_jsarray<'a>(&mut self, cx: &mut
+                                 FunctionContext<'a>) -> JsResult<'a, JsArray> {
         let arr = cx.empty_array();
-        let screen_pixels = self.cpu.screen.pixels.iter().take(40);
+        let screen_pixels = self.cpu.screen.pixels.iter();
         let mut j = 0;
-        
+
         for byte in screen_pixels {
             let values = [
                 cx.boolean(byte & 0x80 != 0),
@@ -54,13 +55,33 @@ impl Zeus {
             ];
             
             for value in values.iter() {
-                arr.set(&mut cx, j as u32, *value);
+                arr.set(&mut *cx, j as u32, *value);
                 j+=1;
-            } 
+            }
         }
-
+        
         Ok(arr)
     }
+
+    pub fn run_frame<'a>(&mut self, mut cx: FunctionContext<'a>) ->
+        JsResult<'a, JsObject> {
+            let result = cx.empty_object();
+            self.cpu.run_frame();
+            let screen = self.screen_to_jsarray(&mut cx)?;
+            result.set(&mut cx, "screen", screen);
+
+            let mem = cx.empty_array();
+
+            for (i, byte) in self.cpu.ram.mem.iter().enumerate() {
+                let num = cx.number(*byte as u32);
+                mem.set(&mut cx, i as u32, num);
+            }
+
+            result.set(&mut cx, "memory", mem);
+            
+            
+            Ok(result)
+        }
 
     pub fn load_rom<'a>(&mut self, mut cx: FunctionContext<'a>) ->
         JsResult<'a, JsObject> {

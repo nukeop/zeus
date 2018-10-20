@@ -18,13 +18,17 @@ fn get_memory(mut cx: FunctionContext) -> JsResult<JsArray> {
 }
 
 fn get_screen(mut cx: FunctionContext) -> JsResult<JsArray> {
-    zeus.lock().unwrap().get_screen(cx)
+    zeus.lock().unwrap().screen_to_jsarray(&mut cx)
 }
 
 fn step(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     zeus.lock().unwrap().step();
 
     Ok(cx.undefined())
+}
+
+fn run_frame(mut cx: FunctionContext) -> JsResult<JsObject> {
+    zeus.lock().unwrap().run_frame(cx)
 }
 
 fn load_rom(mut cx: FunctionContext) -> JsResult<JsObject> {
@@ -36,7 +40,9 @@ register_module!(mut cx, {
     cx.export_function("getMemory", get_memory);
     cx.export_function("getScreen", get_screen);
     cx.export_function("step", step);
+    cx.export_function("runFrame", run_frame);
     cx.export_function("loadRom", load_rom);
+    
     
     Ok(())
 });

@@ -33,8 +33,8 @@ class App extends React.Component {
   }
 
   step() {
-    rustModules.step();
-    let screen = rustModules.getScreen();
+    let result = rustModules.runFrame();
+    let screen = result.screen;
     this.setState({screen});
   }
 

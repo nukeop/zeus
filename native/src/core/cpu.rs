@@ -58,7 +58,7 @@ impl CPU {
             self.decode(next);
         }
 
-        self.regs.n.wrapping_add(1);
+        self.regs.n = self.regs.n.wrapping_add(1);
     }
 
     pub fn sync(&mut self) {
@@ -325,6 +325,6 @@ impl CPU {
     }
 
     pub fn wait(&mut self) {
-        self.regs.n = 0xFFFF;
+        self.regs.n = 0xFFFE;
     }
 }
