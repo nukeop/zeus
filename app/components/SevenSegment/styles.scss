@@ -29,6 +29,18 @@
       border-top: 3px solid $light;
       border-left: 3px solid transparent;
       border-right: 3px solid transparent;
+
+      &.digit_0,
+      &.digit_2,
+      &.digit_3,
+      &.digit_5,
+      &.digit_6,
+      &.digit_7,
+      &.digit_8,
+      &.digit_9 {
+        border-top: 3px solid $dark;
+      }
+      
     }
 
     &.b {
@@ -40,6 +52,17 @@
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
+
+      &.digit_0,
+      &.digit_1,
+      &.digit_2,
+      &.digit_3,
+      &.digit_4,
+      &.digit_7,
+      &.digit_8,
+      &.digit_9 {
+        border-right: 3px solid $dark;
+      }
     }
 
     &.c {
@@ -51,6 +74,19 @@
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
+
+      &.digit_0,
+      &.digit_1,
+      &.digit_3,
+      &.digit_4,
+      &.digit_5,
+      &.digit_6,
+      &.digit_7,
+      &.digit_8,
+      &.digit_9 {
+        border-right: 3px solid $dark;
+      }
+      
     }
 
     &.d {
@@ -61,6 +97,16 @@
       border-bottom: 3px solid $light;
       border-left: 3px solid transparent;
       border-right: 3px solid transparent;
+
+      &.digit_0,
+      &.digit_2,
+      &.digit_3,
+      &.digit_5,
+      &.digit_6,
+      &.digit_8,
+      &.digit_9 {
+        border-bottom: 3px solid $dark;
+      }
     }
 
     &.e {
@@ -72,6 +118,13 @@
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
+
+      &.digit_0,
+      &.digit_2,
+      &.digit_6,
+      &.digit_8 {
+        border-left: 3px solid $dark;
+      }
     }
 
     &.f {
@@ -83,11 +136,40 @@
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
       transform: rotate(6deg);
+
+      &.digit_0,
+      &.digit_4,
+      &.digit_5,
+      &.digit_6,
+      &.digit_8,
+      &.digit_9 {
+        border-left: 3px solid $dark;
+      }
     }
 
     &.g {
       top: 13px;
       left: 4px;
+
+      &.digit_2 .top,
+      &.digit_3 .top,
+      &.digit_4 .top,
+      &.digit_5 .top,
+      &.digit_6 .top,
+      &.digit_8 .top,
+      &.digit_9 .top {
+        border-bottom: 1.5px solid $dark;
+      }
+
+      &.digit_2 .bottom,
+      &.digit_3 .bottom,
+      &.digit_4 .bottom,
+      &.digit_5 .bottom,
+      &.digit_6 .bottom,
+      &.digit_8 .bottom,
+      &.digit_9 .bottom {
+        border-top: 1.5px solid $dark;
+      }
       
       .top {
         height: 0;

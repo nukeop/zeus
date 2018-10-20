@@ -45,7 +45,10 @@ class App extends React.Component {
             <MenuItem onClick={this.step.bind(this)}>Step</MenuItem>
           </Menu>
           <ScreenDecoration>
-            <SevenSegment />
+            <SevenSegment
+              numberLeft={1234}
+              numberRight={9987}
+            />
             <Screen
               screenData={this.state.screen}
             />
