@@ -137,6 +137,7 @@ impl CPU {
             0x25 => self.bank(),
             0x26 => self.rand(),
             0x27 => self.wait(),
+            0x28 => self.clrs(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -326,5 +327,11 @@ impl CPU {
 
     pub fn wait(&mut self) {
         self.regs.n = 0xFFFE;
+    }
+
+    pub fn clrs(&mut self) {
+        for i in 1..40 {
+            self.ram.mem[i] = 0;
+        }
     }
 }

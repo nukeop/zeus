@@ -18,10 +18,6 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    setInterval(this.step.bind(this), 34);
-  }
-
   openRomDialog() {
     let filename = remote.dialog.showOpenDialog({
       properties: ['openFile'],
@@ -29,7 +25,8 @@ class App extends React.Component {
         {name: 'ROM', extensions: ['zeus']}
       ]
     })[0];
-    console.log(rustModules.loadRom(filename));  
+    console.log(rustModules.loadRom(filename));
+    setInterval(this.step.bind(this), 250);
   }
 
   step() {
@@ -43,7 +40,7 @@ class App extends React.Component {
       <div className={styles.app_container}>
         <div className={styles.column}>
           <Menu>
-            <MenuItem onClick={this.openRomDialog}>Load ROM</MenuItem>
+            <MenuItem onClick={this.openRomDialog.bind(this)}>Load ROM</MenuItem>
             <MenuItem onClick={this.step.bind(this)}>Step</MenuItem>
           </Menu>
           <ScreenDecoration>
