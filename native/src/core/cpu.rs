@@ -2,6 +2,7 @@ use core::arithm::swizzle;
 use core::memory::{RAM,Memory};
 use core::rom::Rom;
 use core::screen::ScreenDriver;
+use core::seven_segment::SevenSegment;
 
 pub struct Registers {
     x: u8,
@@ -28,7 +29,9 @@ impl Registers {
 pub struct CPU {
     pub regs: Registers,
     pub ram: RAM,
-    pub screen: ScreenDriver
+    pub screen: ScreenDriver,
+    pub score: SevenSegment,
+    pub hi_score: SevenSegment
 }
 
 impl CPU {
@@ -36,7 +39,9 @@ impl CPU {
         CPU {
             regs: Registers::new(),
             ram: RAM::new(),
-            screen: ScreenDriver::new(16, 20)
+            screen: ScreenDriver::new(16, 20),
+            score: SevenSegment::new(5),
+            hi_score: SevenSegment::new(5)
         }
     }
 
@@ -54,7 +59,10 @@ impl CPU {
             self.sync();
         } else {
             let next = self.load_byte_increment_pc();
-            println!("Opcode: 0x{:X}", next);
+            if (next != 0) {
+                println!("Opcode: 0x{:X}", next);
+            }
+            
             self.decode(next);
         }
 
@@ -68,23 +76,30 @@ impl CPU {
         for (i, byte) in screen_mem.enumerate() {
             self.screen.pixels[i] = *byte;
         }
+
+        let mut score_mem = self.ram.mem.iter().skip(40).take(5).enumerate();
+        for (i, byte) in score_mem {
+            self.score.set_digit(i, *byte);
+        }
     }
 
     pub fn reset(&mut self) {
         self.regs = Registers::new();
+        self.ram.clear();
+        self.sync();
     }
 
     pub fn load_byte_increment_pc(&mut self) -> u8 {
         let pc = self.regs.pc;
         let val = self.ram.load_byte(pc);
-        self.regs.pc += 1;
+        self.regs.pc = self.regs.pc.wrapping_add(1);
         val
     }
 
     pub fn load_word_increment_pc(&mut self) -> u16 {
         let pc = self.regs.pc;
         let val = self.ram.load_word(pc);
-        self.regs.pc += 2;
+        self.regs.pc = self.regs.pc.wrapping_add(2);
         val
     }
 
@@ -317,6 +332,7 @@ impl CPU {
 
     pub fn jump(&mut self) {
         let val = self.load_word_increment_pc();
+        println!("JUMP {:X}", val);
         self.regs.pc = val;
     }
 

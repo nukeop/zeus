@@ -1,5 +1,5 @@
 pub struct Digit {
-    val: u8
+    pub val: u8
 }
 
 impl Digit {
@@ -8,18 +8,27 @@ impl Digit {
             val: v
         }
     }
+
+    pub fn set_val(&mut self, v: u8) {
+        self.val = v;
+    }
 }
 
 pub struct SevenSegment {
-    digits: Vector<Digit>
+    pub digits: Vec<Digit>
 }
 
 impl SevenSegment {
-    pub fn new(digits: u8) -> SevenSegment {
-        let digits = Vec::new();
-        for _ in 1..digits {
+    pub fn new(d: u8) -> SevenSegment {
+        let mut digits = Vec::new();
+        for _ in 0..d {
             digits.push(Digit::new(0));
         }
+        
         SevenSegment{digits}
+    }
+
+    pub fn set_digit(&mut self, d: usize, val: u8) {
+        self.digits[d].val = val;
     }
 }

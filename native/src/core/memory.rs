@@ -22,6 +22,10 @@ impl RAM {
             rom_mem: [0; 0xE000]
         }
     }
+
+    pub fn clear(&mut self) {
+        self.mem = [0; 0x2000];
+    }
 }
 
 impl Memory for RAM {
