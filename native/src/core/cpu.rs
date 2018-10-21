@@ -345,7 +345,7 @@ impl CPU {
         if (self.regs.t != 0) {
             self.jump();
         } else {
-            self.regs.pc += 2;
+            self.regs.pc = self.regs.pc.wrapping_add(2);
         }
     }
 
@@ -353,7 +353,7 @@ impl CPU {
         if (self.regs.t == 0) {
             self.jump();
         } else {
-            self.regs.pc += 2;
+            self.regs.pc = self.regs.pc.wrapping_add(2);
         }
     }
 
