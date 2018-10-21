@@ -3,6 +3,7 @@ use neon::prelude::*;
 use core::cpu::CPU;
 use core::memory::{RAM, Memory};
 use core::rom::Rom;
+use core::seven_segment::SevenSegment;
 
 pub struct Zeus {
     pub cpu: CPU,
@@ -37,7 +38,7 @@ impl Zeus {
     }
 
     pub fn screen_to_jsarray<'a>(&mut self, cx: &mut
-                                 FunctionContext<'a>) -> JsResult<'a, JsArray> {
+      FunctionContext<'a>) -> JsResult<'a, JsArray> {
         let arr = cx.empty_array();
         let screen_pixels = self.cpu.screen.pixels.iter();
         let mut j = 0;
@@ -63,6 +64,34 @@ impl Zeus {
         Ok(arr)
     }
 
+    pub fn seven_segment_to_jsarray<'a>(cx: &mut FunctionContext<'a>,
+        display: &SevenSegment) -> JsResult<'a, JsArray> {
+        let result = cx.empty_array();
+
+        let digits = display.digits.iter().enumerate();
+            for (i, digit) in digits {
+                let val = digit.val;
+                let digit = cx.empty_array();
+                let values = [
+                    cx.boolean(val & 0x80 != 0),
+                    cx.boolean(val & 0x40 != 0),
+                    cx.boolean(val & 0x20 != 0),
+                    cx.boolean(val & 0x10 != 0),
+                    cx.boolean(val & 0x08 != 0),
+                    cx.boolean(val & 0x04 != 0),
+                    cx.boolean(val & 0x02 != 0),
+                    cx.boolean(val & 0x01 != 0)
+                ];
+                for (j, value) in values.iter().enumerate() {
+                    digit.set(cx, j as u32, *value);
+                }
+
+                result.set(cx, i as u32, digit);
+            }
+
+        Ok(result)
+    }
+
     pub fn run_frame<'a>(&mut self, mut cx: FunctionContext<'a>) ->
         JsResult<'a, JsObject> {
             let result = cx.empty_object();
@@ -80,21 +109,16 @@ impl Zeus {
             result.set(&mut cx, "memory", mem);
 
             let seven_segment = cx.empty_object();
-            let score = cx.empty_array();
-            let hi_score = cx.empty_array();
-
-            let score_mem = self.cpu.ram.mem.iter().skip(41).take(5).enumerate();
-            for (i, byte) in score_mem {
-                let num = cx.number(*byte as u32);
-                score.set(&mut cx, i as u32, num);
-            }
-
-            let hi_score_mem = self.cpu.ram.mem.iter().skip(46).take(5).enumerate();
-            for (i, byte) in hi_score_mem {
-                let num = cx.number(*byte as u32);
-                hi_score.set(&mut cx, i as u32, num);
-            }
+            let score = Zeus::seven_segment_to_jsarray(
+                &mut cx,
+                &self.cpu.score
+            )?;
             
+            let hi_score = Zeus::seven_segment_to_jsarray(
+                &mut cx,
+                &self.cpu.hi_score
+            )?;
+
             seven_segment.set(&mut cx, "score", score);
             seven_segment.set(&mut cx, "hiscore", hi_score);
             result.set(&mut cx, "sevenSegment", seven_segment);

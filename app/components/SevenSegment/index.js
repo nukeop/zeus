@@ -11,20 +11,19 @@ const Digit = props => {
     digit
   } = props;
 
-  let d = 'digit_' + digit;
   
   return (
     <div className={cx(
       common.zeus,
       styles.digit     
     )}>
-      <div className={cx(styles.segment, styles.a, d)} />
-      <div className={cx(styles.segment, styles.b, d)} />
-      <div className={cx(styles.segment, styles.c, d)} />
-      <div className={cx(styles.segment, styles.d, d)} />
-      <div className={cx(styles.segment, styles.e, d)} />
-      <div className={cx(styles.segment, styles.f, d)} />
-      <div className={cx(styles.segment, styles.g, d)}>
+      <div className={cx(styles.segment, styles.a, {'on': digit[0]})} />
+      <div className={cx(styles.segment, styles.b, {'on': digit[1]})} />
+      <div className={cx(styles.segment, styles.c, {'on': digit[2]})} />
+      <div className={cx(styles.segment, styles.d, {'on': digit[3]})} />
+      <div className={cx(styles.segment, styles.e, {'on': digit[4]})} />
+      <div className={cx(styles.segment, styles.f, {'on': digit[5]})} />
+      <div className={cx(styles.segment, styles.g, {'on': digit[6]})}>
         <div className={styles.top} />
         <div className={styles.bottom} />
       </div>
@@ -34,36 +33,31 @@ const Digit = props => {
 
 const SevenSegment = props => {
   let {
-    numberLeft,
-    numberRight
+    score,
+    hiScore
   } = props;
-
-  let digitsLeft = leftPad(numberLeft + '', 5, ' ').split('');
-  let digitsRight = leftPad(numberRight + '', 5, ' ').split('');
   
   return (
     <div className={cx(
       common.zeus,
       styles.seven_segment
     )} >
-      <Digit digit={digitsLeft[0]} />
-      <Digit digit={digitsLeft[1]} />
-      <Digit digit={digitsLeft[2]} />
-      <Digit digit={digitsLeft[3]} />
-      <Digit digit={digitsLeft[4]} />
+      {
+        score.map((digit, i) => {
+          return (<Digit key={i} digit={digit}/>);
+        })
+      }
       <div style={{width: '18px'}} />
-      <Digit digit={digitsRight[0]} />
-      <Digit digit={digitsRight[1]} />
-      <Digit digit={digitsRight[2]} />
-      <Digit digit={digitsRight[3]} />
-      <Digit digit={digitsRight[4]} />
+      {
+        hiScore.map((digit, i) => {
+          return (<Digit key={i} digit={digit}/>);
+        })
+      }
     </div>
   );
 };
 
 SevenSegment.propTypes = {
-  numberLeft: PropTypes.number,
-  numberRight: PropTypes.number
 };
 
 SevenSegment.defaultProps = {

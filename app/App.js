@@ -15,7 +15,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: rustModules.getScreen()
+      screen: rustModules.getScreen(),
+      score: [
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+      ],
+      hiScore: [
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false],
+      ]
     };
   }
 
@@ -33,7 +47,13 @@ class App extends React.Component {
   step() {
     let result = rustModules.runFrame();
     let screen = result.screen;
-    this.setState({screen});
+    let score = result.sevenSegment.score;
+    let hiScore = result.sevenSegment.hiscore;
+    this.setState({
+      screen,
+      score,
+      hiScore
+    });
   }
 
   render() {
@@ -46,8 +66,8 @@ class App extends React.Component {
           </Menu>
           <ScreenDecoration>
             <SevenSegment
-              numberLeft={1234}
-              numberRight={9987}
+              score={this.state.score}
+              hiScore={this.state.hiScore}
             />
             <Screen
               screenData={this.state.screen}

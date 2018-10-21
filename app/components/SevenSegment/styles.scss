@@ -37,7 +37,8 @@
       &.digit_6,
       &.digit_7,
       &.digit_8,
-      &.digit_9 {
+      &.digit_9,
+      &.on {
         border-top: 3px solid $dark;
       }
       
@@ -60,7 +61,8 @@
       &.digit_4,
       &.digit_7,
       &.digit_8,
-      &.digit_9 {
+      &.digit_9,
+      &.on {
         border-right: 3px solid $dark;
       }
     }
@@ -83,7 +85,8 @@
       &.digit_6,
       &.digit_7,
       &.digit_8,
-      &.digit_9 {
+      &.digit_9,
+      &.on {
         border-right: 3px solid $dark;
       }
       
@@ -104,7 +107,8 @@
       &.digit_5,
       &.digit_6,
       &.digit_8,
-      &.digit_9 {
+      &.digit_9,
+      &.on {
         border-bottom: 3px solid $dark;
       }
     }
@@ -122,7 +126,8 @@
       &.digit_0,
       &.digit_2,
       &.digit_6,
-      &.digit_8 {
+      &.digit_8,
+      &.on {
         border-left: 3px solid $dark;
       }
     }
@@ -142,7 +147,8 @@
       &.digit_5,
       &.digit_6,
       &.digit_8,
-      &.digit_9 {
+      &.digit_9,
+      &.on {
         border-left: 3px solid $dark;
       }
     }
@@ -157,7 +163,8 @@
       &.digit_5 .top,
       &.digit_6 .top,
       &.digit_8 .top,
-      &.digit_9 .top {
+      &.digit_9 .top,
+      &.on .top {
         border-bottom: 1.5px solid $dark;
       }
 
@@ -167,7 +174,8 @@
       &.digit_5 .bottom,
       &.digit_6 .bottom,
       &.digit_8 .bottom,
-      &.digit_9 .bottom {
+      &.digit_9 .bottom,
+      &.on .bottom {
         border-top: 1.5px solid $dark;
       }
       
