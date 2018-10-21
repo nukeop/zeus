@@ -77,9 +77,14 @@ impl CPU {
             self.screen.pixels[i] = *byte;
         }
 
-        let mut score_mem = self.ram.mem.iter().skip(40).take(5).enumerate();
+        let score_mem = self.ram.mem.iter().skip(41).take(5).enumerate();
         for (i, byte) in score_mem {
             self.score.set_digit(i, *byte);
+        }
+
+        let hi_score_mem = self.ram.mem.iter().skip(46).take(5).enumerate();
+        for (i, byte) in hi_score_mem {
+            self.hi_score.set_digit(i, *byte);
         }
     }
 

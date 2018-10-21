@@ -78,7 +78,26 @@ impl Zeus {
             }
 
             result.set(&mut cx, "memory", mem);
+
+            let seven_segment = cx.empty_object();
+            let score = cx.empty_array();
+            let hi_score = cx.empty_array();
+
+            let score_mem = self.cpu.ram.mem.iter().skip(41).take(5).enumerate();
+            for (i, byte) in score_mem {
+                let num = cx.number(*byte as u32);
+                score.set(&mut cx, i as u32, num);
+            }
+
+            let hi_score_mem = self.cpu.ram.mem.iter().skip(46).take(5).enumerate();
+            for (i, byte) in hi_score_mem {
+                let num = cx.number(*byte as u32);
+                hi_score.set(&mut cx, i as u32, num);
+            }
             
+            seven_segment.set(&mut cx, "score", score);
+            seven_segment.set(&mut cx, "hiscore", hi_score);
+            result.set(&mut cx, "sevenSegment", seven_segment);
             
             Ok(result)
         }
