@@ -9,7 +9,7 @@ Fictional cheap, Russian, electronic handheld game.
 * 16-bit memory addresses
 * 8kb of RAM (some mapped for specific purposes)
 * 6 buttons (D-Pad, A, B)
-* 2 audio channels (sin and noise, only one can be used at a time)
+* 2 audio channels (synthesised sound and noise, only one can be used at a time)
 * 16x20 black and white screen (1 bit per pixel)
 * Two 5 digit seven-segment displays for scores, etc
 * Two 2 digit seven-segment displays for speed and level
@@ -108,7 +108,8 @@ The table below lists reserved memory areas and their purpose.
 |-----------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 0x0000 - 0x0027 | Screen control    | The contents of these 40 bytes control the display. At the end of each frame, the screen is synchronized with this memory range by interpreting subsequent bits as pixels, row by row.                                                                                                                                                                                                                                             |
 | 0x0028          | Button inputs     | The device's buttons are stored in a single byte at this address. Each bit represents a single button and it is flipped as the button is pressed and released. 1 means a button is down, 0 means up. The 0th bit is the left d-pad button, 1st - up, 2nd - right, 3rd - down, 4th - A, 5th - B. 6th and 7th are unused. Writing to this memory has no effect, and it will be overwritten the next time any button's state changes. |
-| 0x0029 - 0x0035 | 7-segment display | There are two 5-digit displays, and two 2-digit displays, for a total of 14 digits. This memory area controls their state, with each byte representing one digit.                                                                                                                                                                                                                                                                  |
+| 0x0029 - 0x0034 | 7-segment display | There are two 5-digit displays, and two 2-digit displays, for a total of 14 digits. This memory area controls their state, with each byte representing one digit.                                                                                                                                                                                                                                                                  |
+| 0x0035 - 0x003C | Audio             | Writing to these addresses controls the audio and noise channels. There are three voices available - two square waves and one triangle. Writing a value of 0 silences audio from that channel, any other value plays a note as long as it's non-zero. Each voice is controlled by two bytes.                                                                                                                                       |
 
 ## ROMs
 
