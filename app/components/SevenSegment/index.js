@@ -40,19 +40,31 @@ const SevenSegment = props => {
   return (
     <div className={cx(
       common.zeus,
-      styles.seven_segment
-    )} >
-      {
-        score.map((digit, i) => {
-          return (<Digit key={i} digit={digit}/>);
-        })
-      }
+      styles.seven_segment_container
+    )}>
+      <div className={cx(
+        common.zeus,
+        styles.seven_segment
+      )} >
+        {
+          score.map((digit, i) => {
+            return (<Digit key={i} digit={digit}/>);
+          })
+        }
+      </div>
+      
       <div style={{width: '18px'}} />
-      {
-        hiScore.map((digit, i) => {
-          return (<Digit key={i} digit={digit}/>);
-        })
-      }
+      
+      <div className={cx(
+        common.zeus,
+        styles.seven_segment
+      )} >
+        {
+          hiScore.map((digit, i) => {
+            return (<Digit key={i} digit={digit}/>);
+          })
+        }
+      </div>
     </div>
   );
 };

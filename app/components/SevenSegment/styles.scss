@@ -1,5 +1,11 @@
 @import '../../colors.scss';
 
+.seven_segment_container {
+  display: flex;
+  flex-flow: row;
+  width: 16.5em;
+}
+
 .seven_segment {
   display: flex;
   flex-flow: row;
