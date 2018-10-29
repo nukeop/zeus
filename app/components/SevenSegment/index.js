@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import leftPad from 'left-pad';
 
 import styles from './styles.scss';
 import common from '../../styles.scss';
@@ -52,9 +51,7 @@ const SevenSegment = props => {
           })
         }
       </div>
-      
-      <div style={{width: '18px'}} />
-      
+            
       <div className={cx(
         common.zeus,
         styles.seven_segment
@@ -70,11 +67,14 @@ const SevenSegment = props => {
 };
 
 SevenSegment.propTypes = {
+  score: PropTypes.array,
+  hiScore: PropTypes.array
 };
 
 SevenSegment.defaultProps = {
-  numberLeft: '',
-  numberRight: ''
+  score: '',
+  hiScore: ''
 };
 
+export { Digit };
 export default SevenSegment;

@@ -11,7 +11,7 @@ const ScreenDecoration = props => {
       common.zeus,
       styles.screen_decoration
     )} >
-      <div className={styles.title}>
+      <div className={styles.top_title}>
         Super
       </div>
       {props.children}

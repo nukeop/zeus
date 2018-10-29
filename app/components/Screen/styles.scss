@@ -3,9 +3,9 @@
 .screen {
   display: flex;
   flex-flow: row wrap;
-  width: 16em;
-  height: 20em;
-
+  width: 16.5em;
+  box-sizing: border-box;
+  
   margin-left: auto;
   margin-right: auto;
   

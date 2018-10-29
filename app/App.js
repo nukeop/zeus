@@ -1,6 +1,7 @@
 import React from 'react';
 import { remote } from 'electron';
 
+import BottomSevenSegment from './components/BottomSevenSegment';
 import Screen from './components/Screen';
 import ScreenDecoration from './components/ScreenDecoration';
 import SevenSegment from './components/SevenSegment';
@@ -21,14 +22,22 @@ class App extends React.Component {
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false],
-        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false]
       ],
       hiScore: [
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false]
+      ],
+      bottomDigitsLeft: [
         [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false]
+      ],
+      bottomDigitsRight: [
+        [false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false]
       ]
     };
   }
@@ -41,7 +50,7 @@ class App extends React.Component {
       ]
     })[0];
     console.log(rustModules.loadRom(filename));
-    setInterval(this.step.bind(this), 250);
+    setInterval(this.step.bind(this), 100);
   }
 
   step() {
@@ -71,6 +80,10 @@ class App extends React.Component {
             />
             <Screen
               screenData={this.state.screen}
+            />
+            <BottomSevenSegment
+              digitsLeft={this.state.bottomDigitsLeft}
+              digitsRight={this.state.bottomDigitsRight}
             />
           </ScreenDecoration>
           <Title>

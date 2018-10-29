@@ -4,6 +4,7 @@
   display: flex;
   flex-flow: row;
   width: 16.5em;
+  justify-content: space-between;
 }
 
 .seven_segment {
@@ -11,17 +12,15 @@
   flex-flow: row;
   justify-content: space-around;
   background-color: $lightest;
-  margin-bottom: 1em;
+  margin-bottom: 0.6em;
   padding: 0.25em 0.25em;
-  height: 2em;
-  width: 15.5em;
   border: 0.25em solid $darkest;
 
   .digit {
     display: inline-block;
     position: relative;
     width: 18px;
-    height: 38px;
+    height: 30px;
     padding: 0px 2px;
   }
   
