@@ -119,8 +119,20 @@ impl Zeus {
                 &self.cpu.hi_score
             )?;
 
+            let speed_lcd = Zeus::seven_segment_to_jsarray(
+                &mut cx,
+                &self.cpu.speed_lcd
+            )?;
+
+            let level_lcd = Zeus::seven_segment_to_jsarray(
+                &mut cx,
+                &self.cpu.level_lcd
+            )?;
+
             seven_segment.set(&mut cx, "score", score);
             seven_segment.set(&mut cx, "hiscore", hi_score);
+            seven_segment.set(&mut cx, "speed", speed_lcd);
+            seven_segment.set(&mut cx, "level", level_lcd);
             result.set(&mut cx, "sevenSegment", seven_segment);
             
             Ok(result)

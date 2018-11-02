@@ -31,7 +31,9 @@ pub struct CPU {
     pub ram: RAM,
     pub screen: ScreenDriver,
     pub score: SevenSegment,
-    pub hi_score: SevenSegment
+    pub hi_score: SevenSegment,
+    pub speed_lcd: SevenSegment,
+    pub level_lcd: SevenSegment
 }
 
 impl CPU {
@@ -41,7 +43,9 @@ impl CPU {
             ram: RAM::new(),
             screen: ScreenDriver::new(16, 20),
             score: SevenSegment::new(5),
-            hi_score: SevenSegment::new(5)
+            hi_score: SevenSegment::new(5),
+            speed_lcd: SevenSegment::new(2),
+            level_lcd: SevenSegment::new(2)
         }
     }
 
@@ -85,6 +89,16 @@ impl CPU {
         let hi_score_mem = self.ram.mem.iter().skip(46).take(5).enumerate();
         for (i, byte) in hi_score_mem {
             self.hi_score.set_digit(i, *byte);
+        }
+
+        let speed_lcd_mem = self.ram.mem.iter().skip(51).take(2).enumerate();
+        for (i, byte) in speed_lcd_mem {
+            self.speed_lcd.set_digit(i, *byte);
+        }
+
+        let level_lcd_mem = self.ram.mem.iter().skip(53).take(2).enumerate();
+        for (i, byte) in level_lcd_mem {
+            self.level_lcd.set_digit(i, *byte);
         }
     }
 
