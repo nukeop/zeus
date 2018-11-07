@@ -31,11 +31,11 @@ class App extends React.Component {
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false]
       ],
-      bottomDigitsLeft: [
+      level: [
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false]
       ],
-      bottomDigitsRight: [
+      speed: [
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false]
       ]
@@ -55,13 +55,12 @@ class App extends React.Component {
 
   step() {
     let result = rustModules.runFrame();
-    let screen = result.screen;
-    let score = result.sevenSegment.score;
-    let hiScore = result.sevenSegment.hiscore;
     this.setState({
-      screen,
-      score,
-      hiScore
+      screen: result.screen,
+      score: result.sevenSegment.score,
+      hiScore: result.sevenSegment.hiscore,
+      speed: result.sevenSegment.speed,
+      level: result.sevenSegment.level
     });
   }
 
@@ -82,8 +81,8 @@ class App extends React.Component {
               screenData={this.state.screen}
             />
             <BottomSevenSegment
-              digitsLeft={this.state.bottomDigitsLeft}
-              digitsRight={this.state.bottomDigitsRight}
+              digitsLeft={this.state.speed}
+              digitsRight={this.state.level}
             />
           </ScreenDecoration>
           <Title>
