@@ -170,10 +170,11 @@ impl CPU {
             0x24 => self.tjmp(),
             0x25 => self.fjmp(),
             0x26 => self.rjmp(),
-            0x27 => self.bank(),
-            0x28 => self.rand(),
-            0x29 => self.wait(),
-            0x2A => self.clrs(),
+            0x27 => self.ijmp(),
+            0x28 => self.bank(),
+            0x29 => self.rand(),
+            0x2A => self.wait(),
+            0x2B => self.clrs(),
             _ => panic!("Unimplemented opcode: {:X}", opcode)
         };
     }
@@ -351,7 +352,6 @@ impl CPU {
 
     pub fn jump(&mut self) {
         let val = self.load_word_increment_pc();
-        println!("JUMP {:X}", val);
         self.regs.pc = val;
     }
 
@@ -372,15 +372,21 @@ impl CPU {
     }
 
     pub fn rjmp(&mut self) {
+        panic!("Not implemented yet");
+    }
 
+    pub fn ijmp(&mut self) {
+        let addr = self.get_addr();
+        let jump_dest = self.ram.load_word(addr);
+        self.regs.pc = jump_dest;
     }
 
     pub fn bank(&mut self) {
-
+        panic!("Not implemented yet");
     }
 
     pub fn rand(&mut self) {
-
+        panic!("Not implemented yet");
     }
 
     pub fn wait(&mut self) {
