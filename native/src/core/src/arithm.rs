@@ -1,3 +1,5 @@
+use rand::Rng;
+
 pub fn to_digits(s: String) -> Vec<u32> {
     s.chars().map(|x| x.to_digit(16).unwrap()).collect()
 }
@@ -19,4 +21,9 @@ pub fn swizzle(val: u16, mask: u16) -> u16 {
                                                   (if x>&((4 as u32)) {"0".to_string()} else {format!("{:X}", val_digits[*x as usize])})
     ).collect();
     parse_as_hex(result.join(""))
+}
+
+pub fn get_random(lower: u8, upper: u8) -> u8 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(lower, upper+1)
 }

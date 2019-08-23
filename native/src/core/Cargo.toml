@@ -1,0 +1,9 @@
+[package]
+name = "core"
+version = "0.1.0"
+authors = ["nukeop <nukeop@gumblert.tech>"]
+license = "AGPL-3.0"
+edition = "2018"
+
+[dependencies]
+rand = "0.7"

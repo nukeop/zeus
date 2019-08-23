@@ -1,8 +1,8 @@
-use core::arithm::swizzle;
-use core::memory::{RAM,Memory};
-use core::rom::Rom;
-use core::screen::ScreenDriver;
-use core::seven_segment::SevenSegment;
+use crate::arithm::{swizzle, get_random};
+use crate::memory::{RAM,Memory};
+use crate::rom::Rom;
+use crate::screen::ScreenDriver;
+use crate::seven_segment::SevenSegment;
 
 pub struct Registers {
     x: u8,
@@ -386,7 +386,14 @@ impl CPU {
     }
 
     pub fn rand(&mut self) {
-        panic!("Not implemented yet");
+        let lower = self.load_byte_increment_pc();
+        let upper = self.load_byte_increment_pc();
+        let addr = self.get_addr();
+
+        let result = get_random(lower, upper);
+        if (addr < 0x2000) {
+            self.ram.store_byte(addr, result);
+        }
     }
 
     pub fn wait(&mut self) {

@@ -21,4 +21,11 @@ mod arithm_tests {
         let val = 0xBCD4;
         assert_eq!(arithm::swizzle(val, 0x2223), 0xCCCD);        
     }
+
+    #[test]
+    fn get_random_test() {
+        let result = arithm::get_random(0, 10);
+        assert!(result >= 0);
+        assert!(result <= 10);
+    }
 }
