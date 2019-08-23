@@ -1,7 +1,7 @@
-# zeus
+# ![zeus](https://i.imgur.com/dGZsxrm.png) zeus
 Fictional cheap, Russian, electronic handheld game. 
 
-![screenshot](https://i.imgur.com/YalNITj.png)
+![front](https://i.imgur.com/IVxx7oI.png) ![back](https://i.imgur.com/Ad7BiaU.png) ![angle](https://i.imgur.com/cftdV1B.png)
 
 ## Technical specification
 
