@@ -14,3 +14,8 @@ jobs:
     - name: Run tests
       working-directory: ./native/src/zeus_core
       run: cargo test
+    - name: Code coverage
+      working-directory: ./native/src/zeus_core
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: ../../../coverage.sh
