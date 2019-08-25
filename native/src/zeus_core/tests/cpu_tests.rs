@@ -20,4 +20,20 @@ mod cpu_tests {
             assert_eq!(*byte, 0);
         }
     }
+
+    #[test]
+    fn rand_test() {
+        let mut cpu = CPU::new();
+        cpu.regs.pc = 0x003D;
+
+        cpu.ram.mem[0x003D] = 0x01;
+        cpu.ram.mem[0x003E] = 0x05;
+        cpu.ram.mem[0x003F] = 0x41;
+        cpu.ram.mem[0x0040] = 0x00;
+        cpu.rand();
+
+        assert!(cpu.ram.mem[0x0041] != 0);
+        assert!(cpu.ram.mem[0x0041] >= 1);
+        assert!(cpu.ram.mem[0x0041] <= 5);
+    }
 }
