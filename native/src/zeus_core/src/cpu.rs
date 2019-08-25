@@ -5,12 +5,12 @@ use crate::screen::ScreenDriver;
 use crate::seven_segment::SevenSegment;
 
 pub struct Registers {
-    x: u8,
-    y: u8,
-    t: u8,
-    s: u8,
-    pc: u16,
-    n: u16
+    pub x: u8,
+    pub y: u8,
+    pub t: u8,
+    pub s: u8,
+    pub pc: u16,
+    pub n: u16
 }
 
 impl Registers {
