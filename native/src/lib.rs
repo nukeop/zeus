@@ -2,7 +2,7 @@
 extern crate lazy_static;
 #[macro_use]
 extern crate neon;
-extern crate core;
+extern crate zeus_core;
 
 use std::sync::Mutex;
 use neon::prelude::*;

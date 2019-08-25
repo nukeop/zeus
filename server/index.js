@@ -9,7 +9,10 @@ function createWindow() {
   win = new BrowserWindow({
     width: 640,
     height: 480,
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   win.setTitle('Zeus Entertainment Unit');

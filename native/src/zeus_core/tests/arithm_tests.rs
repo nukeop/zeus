@@ -1,8 +1,8 @@
-extern crate zeus;
+extern crate zeus_core;
 
 #[cfg(test)]
 mod arithm_tests {
-    use zeus::core::arithm;
+    use zeus_core::arithm;
 
     #[test]
     fn swizzle_test() {

@@ -1,5 +1,5 @@
 [package]
-name = "core"
+name = "zeus_core"
 version = "0.1.0"
 authors = ["nukeop <nukeop@gumblert.tech>"]
 license = "AGPL-3.0"

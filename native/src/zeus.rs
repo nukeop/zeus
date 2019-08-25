@@ -1,9 +1,9 @@
 use std;
 use neon::prelude::*;
-use core::cpu::CPU;
-use core::memory::{RAM, Memory};
-use core::rom::Rom;
-use core::seven_segment::SevenSegment;
+use zeus_core::cpu::CPU;
+use zeus_core::memory::{RAM, Memory};
+use zeus_core::rom::Rom;
+use zeus_core::seven_segment::SevenSegment;
 
 pub struct Zeus {
     pub cpu: CPU,
