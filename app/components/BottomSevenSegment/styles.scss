@@ -1,8 +1,15 @@
+@import '../../colors.scss';
+
 .bottom_seven_segment_container {
   display: flex;
   flex-flow: row;
+  justify-content: space-between;
   width: 16em;
   margin-top: 1em;
+
+  .bottom_seven_segment {
+    background: $lightest;
+  }
 
   label {
     display: flex;

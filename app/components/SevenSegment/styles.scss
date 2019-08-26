@@ -3,18 +3,18 @@
 .seven_segment_container {
   display: flex;
   flex-flow: row;
-  width: 16.5em;
+  width: 16em;
   justify-content: space-between;
+  margin-bottom: 1em;
+
+  background: $lightest;
 }
 
 .seven_segment {
   display: flex;
   flex-flow: row;
   justify-content: space-around;
-  background-color: $lightest;
-  margin-bottom: 0.6em;
   padding: 0.25em 0.25em;
-  border: 0.25em solid $darkest;
 
   .digit {
     display: inline-block;

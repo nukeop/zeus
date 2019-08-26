@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
+import '../resources/fonts/Kenney Pixel Square.ttf';
 import App from './App';
 
 const render = Component => {

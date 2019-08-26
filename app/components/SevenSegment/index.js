@@ -10,7 +10,6 @@ const Digit = props => {
     digit
   } = props;
 
-  
   return (
     <div className={cx(
       common.zeus,

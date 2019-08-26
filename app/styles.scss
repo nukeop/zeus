@@ -1,4 +1,10 @@
 @import './colors.scss';
+@import '../resources/fonts/Kenney Pixel Square.ttf';
+
+@font-face {
+  font-family: 'Kenney Pixel Square';
+  src: url('../resources/fonts/Kenney Pixel Square.ttf') format('ttf');
+}
 
 html, body {
   width: 100%;
@@ -11,7 +17,7 @@ html, body {
 }
 
 .zeus {
-  font-family: 'Old Standard TT', serif;
+  font-family: 'Kenney Pixel Square', sans-serif;
 }
 
 .app_container {
@@ -20,7 +26,7 @@ html, body {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: $grey;
+  background: $bg;
 }
 
 .column {

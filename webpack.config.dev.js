@@ -56,6 +56,12 @@ module.exports = {
         test: /\.(png|jpg|gif)$/,
         use: 'url-loader',
         include: RESOURCES_DIR
+      }, {
+        test: /\.(ttf|eot|woff|woff2|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
       }
     ]
   },

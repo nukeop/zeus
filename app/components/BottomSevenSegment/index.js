@@ -19,10 +19,10 @@ const BottomSevenSegment = props => {
       common.zeus,
       styles.bottom_seven_segment_container
     )}>
-      <label>SPEED</label>
       <div className={cx(
         common.zeus,
-        sevenSegmentStyles.seven_segment
+        sevenSegmentStyles.seven_segment,
+        styles.bottom_seven_segment
       )} >
         {
           digitsLeft.map((digit, i) => {
@@ -30,10 +30,10 @@ const BottomSevenSegment = props => {
           })
         }
       </div>
-      <label>LEVEL</label>
       <div className={cx(
         common.zeus,
-        sevenSegmentStyles.seven_segment
+        sevenSegmentStyles.seven_segment,
+        styles.bottom_seven_segment
       )} >
         {
           digitsRight.map((digit, i) => {

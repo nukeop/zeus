@@ -68,26 +68,17 @@ class App extends React.Component {
     return (
       <div className={styles.app_container}>
         <div className={styles.column}>
-          <Menu>
-            <MenuItem onClick={this.openRomDialog.bind(this)}>Load ROM</MenuItem>
-            <MenuItem onClick={this.step.bind(this)}>Step</MenuItem>
-          </Menu>
-          <ScreenDecoration>
-            <SevenSegment
-              score={this.state.score}
-              hiScore={this.state.hiScore}
-            />
-            <Screen
-              screenData={this.state.screen}
-            />
-            <BottomSevenSegment
-              digitsLeft={this.state.speed}
-              digitsRight={this.state.level}
-            />
-          </ScreenDecoration>
-          <Title>
-            9999 in 1
-          </Title>          
+          <SevenSegment
+            score={this.state.score}
+            hiScore={this.state.hiScore}
+          />
+          <Screen
+            screenData={this.state.screen}
+          />
+          <BottomSevenSegment
+            digitsLeft={this.state.speed}
+            digitsRight={this.state.level}
+          />      
         </div>
       </div>
     );
