@@ -24,6 +24,9 @@ const BottomSevenSegment = props => {
         sevenSegmentStyles.seven_segment,
         styles.bottom_seven_segment
       )} >
+        <span className={styles.speed}>
+          Speed
+        </span>
         {
           digitsLeft.map((digit, i) => {
             return (<Digit key={i} digit={digit}/>);
@@ -35,6 +38,9 @@ const BottomSevenSegment = props => {
         sevenSegmentStyles.seven_segment,
         styles.bottom_seven_segment
       )} >
+        <span className={styles.level}>
+          Level
+        </span>
         {
           digitsRight.map((digit, i) => {
             return (<Digit key={i} digit={digit}/>);

@@ -1,9 +1,16 @@
 @import '../../colors.scss';
 
+$digitWidth: 18px;
+$digitHeight: 30px;
+$segmentThickness: 3px;
+
+
 .seven_segment_container {
   display: flex;
   flex-flow: row;
   width: 16em;
+  height: 3em;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 1em;
 
@@ -13,27 +20,53 @@
 .seven_segment {
   display: flex;
   flex-flow: row;
+  height: 100%;
+  align-items: center;
   justify-content: space-around;
   padding: 0.25em 0.25em;
 
   .digit {
     display: inline-block;
     position: relative;
-    width: 18px;
-    height: 30px;
+    width: $digitWidth;
+    height: $digitHeight;
     padding: 0px 2px;
   }
   
   .segment {
     position: absolute;
 
+    @mixin horizontalSegmentTop {
+      border-top: $segmentThickness solid $light;
+      border-left: $segmentThickness solid transparent;
+      border-right: $segmentThickness solid transparent;
+    }
+
+    @mixin horizontalSegmentBottom {
+      border-bottom: $segmentThickness solid $light;
+      border-left: $segmentThickness solid transparent;
+      border-right: $segmentThickness solid transparent;
+    }
+    
+    @mixin verticalSegment {
+      border-top: $segmentThickness solid transparent;
+      border-bottom: $segmentThickness solid transparent;
+      transform: rotate(6deg);
+    }
+
+    @mixin verticalSegmentRight {
+      border-right: $segmentThickness solid $light;
+    }
+
+    @mixin verticalSegmentLeft {
+      border-left: $segmentThickness solid $light;
+    }
+
     &.a {
-      left: 5px;
+      @include horizontalSegmentTop;
+      left: $segmentThickness*5/3;
       height: 0;
-      width: 9px;
-      border-top: 3px solid $light;
-      border-left: 3px solid transparent;
-      border-right: 3px solid transparent;
+      width: $digitWidth/2;
 
       &.digit_0,
       &.digit_2,
@@ -44,20 +77,18 @@
       &.digit_8,
       &.digit_9,
       &.on {
-        border-top: 3px solid $dark;
+        border-top: $segmentThickness solid $dark;
       }
       
     }
 
     &.b {
-      left: 18px;
-      top: 2px;
-      height: 7px;
+      @include verticalSegment;
+      @include verticalSegmentRight;
+      left: $digitWidth;
+      top: $segmentThickness*2/3;
+      height: $digitHeight/4;
       width: 0;
-      border-right: 3px solid $light;
-      border-top: 3px solid transparent;
-      border-bottom: 3px solid transparent;
-      transform: rotate(6deg);
 
       &.digit_0,
       &.digit_1,
@@ -68,19 +99,17 @@
       &.digit_8,
       &.digit_9,
       &.on {
-        border-right: 3px solid $dark;
+        border-right: $segmentThickness solid $dark;
       }
     }
 
     &.c {
-      left: 17px;
-      top: 15px;
-      height: 7px;
+      @include verticalSegment;
+      @include verticalSegmentRight;
+      left: $digitWidth - $segmentThickness/3;
+      top: $digitHeight/2;
+      height: $digitHeight/4;
       width: 0;
-      border-right: 3px solid $light;
-      border-top: 3px solid transparent;
-      border-bottom: 3px solid transparent;
-      transform: rotate(6deg);
 
       &.digit_0,
       &.digit_1,
@@ -92,19 +121,17 @@
       &.digit_8,
       &.digit_9,
       &.on {
-        border-right: 3px solid $dark;
+        border-right: $segmentThickness solid $dark;
       }
       
     }
 
     &.d {
-      left: 3px;
-      top: 27px;
+      @include horizontalSegmentBottom;
+      left: $segmentThickness;
+      top: $digitHeight - $segmentThickness;
       height: 0;
-      width: 9px;
-      border-bottom: 3px solid $light;
-      border-left: 3px solid transparent;
-      border-right: 3px solid transparent;
+      width: $digitWidth/2;
 
       &.digit_0,
       &.digit_2,
@@ -114,38 +141,34 @@
       &.digit_8,
       &.digit_9,
       &.on {
-        border-bottom: 3px solid $dark;
+        border-bottom: $segmentThickness solid $dark;
       }
     }
 
     &.e {
-      left: 2px;
-      top: 15px;
-      height: 7px;
+      @include verticalSegment;
+      @include verticalSegmentLeft;
+      left: $segmentThickness*2/3;
+      top: $digitHeight/2;
+      height: $digitHeight/4;
       width: 0;
-      border-left: 3px solid $light;
-      border-top: 3px solid transparent;
-      border-bottom: 3px solid transparent;
-      transform: rotate(6deg);
 
       &.digit_0,
       &.digit_2,
       &.digit_6,
       &.digit_8,
       &.on {
-        border-left: 3px solid $dark;
+        border-left: $segmentThickness solid $dark;
       }
     }
 
     &.f {
-      left: 3px;
-      top: 2px;
-      height: 7px;
+      @include verticalSegment;
+      @include verticalSegmentLeft;
+      left: $segmentThickness;
+      top: $segmentThickness*2/3;
+      height: $digitHeight/4;
       width: 0;
-      border-left: 3px solid $light;
-      border-top: 3px solid transparent;
-      border-bottom: 3px solid transparent;
-      transform: rotate(6deg);
 
       &.digit_0,
       &.digit_4,
@@ -154,13 +177,13 @@
       &.digit_8,
       &.digit_9,
       &.on {
-        border-left: 3px solid $dark;
+        border-left: $segmentThickness solid $dark;
       }
     }
 
     &.g {
-      top: 13px;
-      left: 4px;
+      top: $digitHeight/2 - 1px;
+      left: $segmentThickness*4/3;
 
       &.digit_2 .top,
       &.digit_3 .top,
@@ -170,7 +193,7 @@
       &.digit_8 .top,
       &.digit_9 .top,
       &.on .top {
-        border-bottom: 1.5px solid $dark;
+        border-bottom: $segmentThickness/2 solid $dark;
       }
 
       &.digit_2 .bottom,
@@ -181,23 +204,23 @@
       &.digit_8 .bottom,
       &.digit_9 .bottom,
       &.on .bottom {
-        border-top: 1.5px solid $dark;
+        border-top: $segmentThickness/2 solid $dark;
       }
       
       .top {
         height: 0;
-        width: 9px;
-        border-bottom: 1.5px solid $light;
-        border-left: 3px solid transparent;
-        border-right: 3px solid transparent;
+        width: $digitWidth/2;
+        border-bottom: $segmentThickness/2 solid $light;
+        border-left: $segmentThickness solid transparent;
+        border-right: $segmentThickness solid transparent;
       }
 
       .bottom {
         height: 0;
-        width: 9px;
-        border-top: 1.5px solid $light;
-        border-left: 3px solid transparent;
-        border-right: 3px solid transparent;
+        width: $digitWidth/2;
+        border-top: $segmentThickness/2 solid $light;
+        border-left: $segmentThickness solid transparent;
+        border-right: $segmentThickness solid transparent;
       }
     }
   }

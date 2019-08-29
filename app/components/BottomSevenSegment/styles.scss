@@ -3,12 +3,35 @@
 .bottom_seven_segment_container {
   display: flex;
   flex-flow: row;
+  align-items: center;
   justify-content: space-between;
   width: 16em;
+  height: 3em;
   margin-top: 1em;
 
   .bottom_seven_segment {
+    position: relative;
     background: $lightest;
+    width: 7em;
+    height: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .speed,
+  .level {
+    position: absolute;
+    left: 0;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-left: 1em;
+    color: $light;
+
+    &.on {
+      color: $dark;
+    }
   }
 
   label {
