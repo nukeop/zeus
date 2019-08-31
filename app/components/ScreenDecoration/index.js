@@ -11,13 +11,10 @@ const ScreenDecoration = props => {
       common.zeus,
       styles.screen_decoration
     )} >
-      <div className={styles.top_title}>
-        Super
-      </div>
       {props.children}
     </div>
   );
-}
+};
 
 ScreenDecoration.propTypes = {
   children: PropTypes.node

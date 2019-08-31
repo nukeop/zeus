@@ -1,0 +1,12 @@
+@import '../../colors.scss';
+
+.console_decoration {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: linear-gradient($darkblue 40%, transparent 40%);
+}

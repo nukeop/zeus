@@ -5,6 +5,7 @@ import BottomSevenSegment from './components/BottomSevenSegment';
 import Screen from './components/Screen';
 import ScreenDecoration from './components/ScreenDecoration';
 import SevenSegment from './components/SevenSegment';
+import ConsoleDecoration from './components/ConsoleDecoration';
 import Menu from './components/Menu';
 import MenuItem from './components/MenuItem';
 import Title from './components/Title';
@@ -67,18 +68,21 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles.app_container}>
+        <ConsoleDecoration />
         <div className={styles.column}>
-          <SevenSegment
-            score={this.state.score}
-            hiScore={this.state.hiScore}
-          />
-          <Screen
-            screenData={this.state.screen}
-          />
-          <BottomSevenSegment
-            digitsLeft={this.state.speed}
-            digitsRight={this.state.level}
-          />      
+          <ScreenDecoration>
+            <SevenSegment
+              score={this.state.score}
+              hiScore={this.state.hiScore}
+            />
+            <Screen
+              screenData={this.state.screen}
+            />
+            <BottomSevenSegment
+              digitsLeft={this.state.speed}
+              digitsRight={this.state.level}
+            />
+          </ScreenDecoration>
         </div>
       </div>
     );
