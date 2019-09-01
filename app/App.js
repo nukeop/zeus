@@ -6,6 +6,7 @@ import Screen from './components/Screen';
 import ScreenDecoration from './components/ScreenDecoration';
 import SevenSegment from './components/SevenSegment';
 import ConsoleDecoration from './components/ConsoleDecoration';
+import ConsoleLogo from './components/ConsoleLogo';
 import Menu from './components/Menu';
 import MenuItem from './components/MenuItem';
 import Title from './components/Title';
@@ -69,6 +70,7 @@ class App extends React.Component {
     return (
       <div className={styles.app_container}>
         <ConsoleDecoration />
+        <ConsoleLogo />
         <div className={styles.column}>
           <ScreenDecoration>
             <SevenSegment

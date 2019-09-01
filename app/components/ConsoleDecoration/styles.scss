@@ -1,5 +1,15 @@
 @import '../../colors.scss';
 
+@mixin stripe($color, $n) {
+  background: linear-gradient(
+    to right,
+    $color calc(50% - 11.5em),
+    transparent calc(50% - 11.5em),
+    transparent calc(50% + 11.5em),
+    $color calc(50% + 11.5em)
+  );
+}
+
 .console_decoration {
   position: absolute;
   z-index: 0;
@@ -9,4 +19,26 @@
   right: 0;
 
   background: linear-gradient($darkblue 40%, transparent 40%);
+
+  .stripe {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0.5em;
+
+    &.first {
+      @include stripe($green3, 1);
+      top: calc(40% - 1em);
+    }
+
+    &.second {
+      @include stripe($green2, 2);
+      top: calc(40% - 2em);
+    }
+
+    &.third {
+      @include stripe($green1, 3);
+      top: calc(40% - 3em);
+    }
+  }
 }

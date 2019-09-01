@@ -1,0 +1,13 @@
+.console_logo {
+  position: absolute;
+  top: 4em;
+  right: 4em;
+  z-index: 20;
+
+  @media screen and (max-width: 768px) {
+    top: 4em;
+    right: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
