@@ -1,9 +1,11 @@
 @import '../../colors.scss';
 
+$screenWidth: 16em;
+
 .screen {
   display: flex;
   flex-flow: row wrap;
-  width: 16em;
+  width: $screenWidth;;
   box-sizing: border-box;
   
   background-color: $lightest;

@@ -1,6 +1,29 @@
+@import '../../colors';
+
 .menu_item {
-  background: linear-gradient( 90deg, #69FF97 10%, #00E4FF 100%);
+  background: $bg;
+  box-shadow: 0 3px 0 $darkbg;
+  color: $screenbg;
+  font-weight: bold;
   user-select: none;
-  padding: 0.5em 0.75em;
-  margin-bottom: 1em;
+  width: 100%;
+  padding: 1em 0.75em;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background: darken($bg, 5%);
+    box-shadow: 0 3px 0 darken($darkbg, 5%);
+  }
+
+  &:active {
+    background: darken($bg, 10%);
+    box-shadow: 0 3px 0 darken($darkbg, 10%);
+  }
+  
+  &:not(:last-child) {
+    margin-bottom: 1em;
+  }
 }

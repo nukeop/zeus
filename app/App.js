@@ -40,7 +40,8 @@ class App extends React.Component {
       speed: [
         [false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false]
-      ]
+      ],
+      loop: null
     };
   }
 
@@ -51,8 +52,15 @@ class App extends React.Component {
         {name: 'ROM', extensions: ['zeus']}
       ]
     })[0];
-    console.log(rustModules.loadRom(filename));
-    setInterval(this.step.bind(this), 100);
+
+    if (this.state.loop) {
+      clearInterval(this.state.loop);
+    }
+
+    rustModules.loadRom(filename);
+    this.setState({
+      loop: setInterval(this.step.bind(this), 100)
+    });
   }
 
   step() {
@@ -71,6 +79,11 @@ class App extends React.Component {
       <div className={styles.app_container}>
         <ConsoleDecoration />
         <ConsoleLogo />
+        <Menu>
+          <MenuItem onClick={this.openRomDialog.bind(this)}>
+            Load cartridge
+          </MenuItem>
+        </Menu>
         <div className={styles.column}>
           <ScreenDecoration>
             <SevenSegment
