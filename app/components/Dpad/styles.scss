@@ -1,0 +1,78 @@
+@import '../../colors';
+
+$buttonWidth: 4em;
+$buttonHeight: 4em;
+
+$button3DBorder: 0.5em;
+
+.d_pad {
+  position: absolute;
+  top: 50%;
+  left: 12.5%;
+
+  .middle {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: $buttonWidth;
+    height: $buttonHeight;
+
+    background: $dpad;
+
+    .bump {
+      width: 50%;
+      height: 50%;
+
+      border-radius: 50%;
+      background: $dpadRim;
+    }
+  }
+
+  .button {
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: $buttonWidth;
+    height: $buttonHeight;
+
+    background: $dpad;
+    border-top: $button3DBorder solid $dpadRim;
+
+    &.left {
+      top: -$button3DBorder;
+      left: -100%;
+      border-radius: 1.5em 0 0 1.5em;
+    }
+
+    &.right {
+      top: -$button3DBorder;
+      right: -100%;
+      border-radius: 0 1.5em 1.5em 0;
+    }
+
+    &.up {
+      bottom: 100%;
+      border-radius: 1.5em 1.5em 0 0;
+    }
+
+    &.down {
+      top: 100%;
+      border-radius: 0 0 1.5em 1.5em;
+      border: none;
+    }
+
+    &::after {
+      content: '';
+      width: 37.5%;
+      height: 37.5%;
+      background: $dpadRim;
+      border-radius: 50%;
+    }
+  }
+}
