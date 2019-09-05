@@ -10,6 +10,25 @@ $button3DBorder: 0.5em;
   top: 50%;
   left: 12.5%;
 
+  @media screen and (max-width: 768px) {
+    top: auto;
+    bottom: $buttonHeight;
+    left: calc(50% - 8em);
+
+    .middle, .button {
+      width: $buttonWidth/2 !important;
+      height: $buttonHeight/2 !important;
+    }
+
+    .button:not(.down) {
+      border-top: $button3DBorder/2 solid $dpadRim !important;
+    }
+
+    .left, .right {
+      top: -$button3DBorder/2 !important;
+    }
+  }
+
   .middle {
     position: relative;
 
