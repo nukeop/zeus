@@ -47,18 +47,20 @@ class App extends React.Component {
   }
 
   openRomDialog() {
-    let filename = remote.dialog.showOpenDialog({
+    let filename = remote.dialog.showOpenDialogSync({
       properties: ['openFile'],
       filters: [
         {name: 'ROM', extensions: ['zeus']}
       ]
-    })[0];
+    });
+    filename = filename[0];
 
     if (this.state.loop) {
       clearInterval(this.state.loop);
     }
 
     rustModules.loadRom(filename);
+
     this.setState({
       loop: setInterval(this.step.bind(this), 100)
     });
