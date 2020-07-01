@@ -5,6 +5,7 @@ import url from 'url';
 const app = electron.app;
 let win;
 
+app.allowRendererProcessReuse = false;
 function createWindow() {
   win = new BrowserWindow({
     width: 640,
