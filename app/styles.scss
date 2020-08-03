@@ -34,5 +34,10 @@ html, body {
   flex-flow: column;
   align-items: center;
   width: 18em;
-  
+}
+
+.buttons {
+  position: absolute;
+  top: 50%;
+  right: 12.5%;
 }

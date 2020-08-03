@@ -1,0 +1,27 @@
+@import '../../colors.scss';
+
+$buttonWidth: 4em;
+$buttonHeight: 4em;
+
+$button3DBorder: 0.5em;
+
+.button {
+display: flex;
+flex-flow: column;
+
+button {
+  background: $button;
+  border-radius: 50%;
+  border: none;
+
+  width: $buttonWidth;
+  height: $buttonHeight + $button3DBorder/2;
+
+  border-top: $button3DBorder solid $buttonRim;
+}
+
+label {
+  font-size: 2em;
+  margin-left: 2em;
+}
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { remote } from 'electron';
+import { XSound, X } from 'xsound';
 
 import BottomSevenSegment from './components/BottomSevenSegment';
 import Screen from './components/Screen';
@@ -8,9 +9,9 @@ import SevenSegment from './components/SevenSegment';
 import ConsoleDecoration from './components/ConsoleDecoration';
 import ConsoleLogo from './components/ConsoleLogo';
 import Dpad from './components/Dpad';
+import Button from './components/Button';
 import Menu from './components/Menu';
 import MenuItem from './components/MenuItem';
-import Title from './components/Title';
 import rustModules from '../native/index.node';
 
 import styles from './styles.scss';
@@ -44,6 +45,10 @@ class App extends React.Component {
       ],
       loop: null
     };
+
+    X('noise').type = 'pinknoise';
+    X('oscillator').setup([true, true, true]);
+    X('oscillator', 0).param('type', 'square');
   }
 
   openRomDialog() {
@@ -75,6 +80,7 @@ class App extends React.Component {
       speed: result.sevenSegment.speed,
       level: result.sevenSegment.level
     });
+    
   }
 
   render() {
@@ -102,6 +108,10 @@ class App extends React.Component {
               digitsRight={this.state.level}
             />
           </ScreenDecoration>
+        </div>
+        <div className={styles.buttons}>
+          <Button label='B' />
+          <Button label='A' />
         </div>
       </div>
     );

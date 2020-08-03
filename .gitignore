@@ -1,6 +1,8 @@
 native/target
 native/index.node
 native/artifacts.json
+native/src/zeus_core/target
 **/*~
 **/node_modules
 **/.DS_Store
+dist
